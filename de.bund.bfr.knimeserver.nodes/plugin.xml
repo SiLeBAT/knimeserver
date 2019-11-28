@@ -12,6 +12,54 @@
       </category>
    </extension>
    <extension
+         point="org.knime.workbench.repository.nodes">
+      <node
+            category-path="/bfrserver"
+            deprecated="false"
+            factory-class="de.bund.bfr.knimeserver.nodes.repository.Factory">
+      </node>
+   </extension>
+   <extension
+         point="org.knime.js.core.javascriptComponents">
+      <javascriptComponent
+            getComponentValue-method-name="getComponentValue"
+            implementationBundleID="de.bund.bfr.knimeserver.nodes.repository.bundle"
+            init-method-name="init"
+            javascriptComponentID="de.bund.bfr.knimeserver.nodes.repository"
+            name="Web repository"
+            namespace="repository_namespace">
+      </javascriptComponent>
+   </extension>
+   <extension
+         point="org.knime.js.core.webResources">
+      <webResourceBundle
+            debug="true"
+            name="Web repository"
+            usesDefine="false"
+            version="1.0.0"
+            webResourceBundleID="de.bund.bfr.knimeserver.nodes.repository.bundle">
+         <webResource
+               relativePathSource="js-src/repository/"
+               relativePathTarget="repository/">
+         </webResource>
+         <importResource
+               relativePath="repository/repository.js"
+               type="JAVASCRIPT">
+         </importResource>
+         <importResource
+               relativePath="repository/repository.css"
+               type="CSS">
+         </importResource>
+         <webDependency
+               webResourceBundleID="jQueryUi_1.12.1">
+         </webDependency>
+         <webDependency
+               webResourceBundleID="KnimeTable_1.0.0">
+         </webDependency>
+      </webResourceBundle>
+   </extension>
+   <!--
+   <extension
          point="org.knime.dynamic.node.generation.dynamicNodes">
       <dynamicNodeFolder
             function="js"
@@ -19,5 +67,6 @@
             path="nodes/">
       </dynamicNodeFolder>
    </extension>
-
+	-->
+	
 </plugin>

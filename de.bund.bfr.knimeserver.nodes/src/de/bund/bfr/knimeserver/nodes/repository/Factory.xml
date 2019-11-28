@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<knimeNode icon="fsk48.png" type="Manipulator" deprecated="false"
+	xmlns="http://knime.org/node/v2.8" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://knime.org/node/v2.8 http://knime.org/node/v2.8.xsd">
+	<name>Web repository</name>
+
+	<shortDescription>Web repository</shortDescription>
+
+	<fullDescription>
+		<intro>
+		</intro>
+	</fullDescription>
+	
+	<interactiveView name="Web repository"></interactiveView>
+
+	<ports>
+		<inPort name="Links" index="0">Links</inPort>
+		<outPort name="Selected model" index="0">Selected model (RowID)</outPort>
+	</ports>
+</knimeNode>
