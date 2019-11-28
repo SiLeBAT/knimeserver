@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.knime.workbench.repository.categories">
+      <category
+            description="BfR Server nodes"
+            icon="icons/fsk48.png"
+            level-id="bfrserver"
+            name="BfR Server"
+            path="/">
+      </category>
+   </extension>
+   <extension
+         point="org.knime.dynamic.node.generation.dynamicNodes">
+      <dynamicNodeFolder
+            function="js"
+            name="BfR Server nodes"
+            path="nodes/">
+      </dynamicNodeFolder>
+   </extension>
+
+</plugin>

@@ -1,10 +1,13 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: KNIME server nodes
-Bundle-SymbolicName: de.bund.bfr.knimeserver.nodes
+Bundle-SymbolicName: de.bund.bfr.knimeserver.nodes;singleton:=true
 Bundle-Version: 1.0.0.qualifier
-Bundle-Activator: de.bund.bfr.knimeserver.nodes.Activator
-Require-Bundle: org.eclipse.core.runtime
+Require-Bundle: org.knime.core,
+ org.knime.js.core,
+ org.knime.dynamic.node.generation,
+ org.knime.dynamic.js,
+ org.knime.workbench.repository
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Automatic-Module-Name: de.bund.bfr.knimeserver.nodes
-Bundle-ActivationPolicy: lazy
+Bundle-Vendor: German Federal Institute for Risk Assessment (BfR)
