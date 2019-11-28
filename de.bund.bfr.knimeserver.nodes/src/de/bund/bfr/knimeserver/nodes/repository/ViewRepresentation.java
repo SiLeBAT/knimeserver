@@ -2,6 +2,9 @@ package de.bund.bfr.knimeserver.nodes.repository;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 
+import java.util.List;
+import java.util.Objects;
+
 import org.knime.core.node.InvalidSettingsException;
 import org.knime.core.node.NodeSettingsRO;
 import org.knime.core.node.NodeSettingsWO;
@@ -9,6 +12,8 @@ import org.knime.js.core.JSONViewContent;
 
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 public class ViewRepresentation extends JSONViewContent {
+
+	List<Link> links;
 
 	@Override
 	public void saveToNodeSettings(NodeSettingsWO settings) {
@@ -20,26 +25,61 @@ public class ViewRepresentation extends JSONViewContent {
 
 	@Override
 	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
 		if (obj == null) {
 			return false;
 		}
-		if (obj == this) {
-			return true;
-		}
-		if (obj.getClass() != getClass()) {
+		if (getClass() != obj.getClass()) {
 			return false;
 		}
-		
-		// check here
-		// ...
-		
-		return true;
+
+		final ViewRepresentation other = (ViewRepresentation) obj;
+		return links.equals(other.links);
 	}
 
 	@Override
 	public int hashCode() {
-		// TODO Auto-generated method stub
-		return 0;
+		return Objects.hash(links);
 	}
 
+	@JsonAutoDetect
+	public static class Link {
+
+		enum LinkType {
+			edition, publication
+		};
+
+		public final String text;
+		public final String url;
+		public final LinkType type;
+		
+		public Link(final String text, final String url, final LinkType type) {
+			this.text = text;
+			this.url = url;
+			this.type = type;
+		}
+
+		@Override
+		public boolean equals(Object obj) {
+			if (this == obj) {
+				return true;
+			}
+			if (obj == null) {
+				return false;
+			}
+			if (getClass() != obj.getClass()) {
+				return false;
+			}
+
+			final Link other = (Link) obj;
+			return text.equals(other.text) && url.equals(other.url) && type == other.type;
+		}
+
+		@Override
+		public int hashCode() {
+			return Objects.hash(text, url, type);
+		}
+	}
 }

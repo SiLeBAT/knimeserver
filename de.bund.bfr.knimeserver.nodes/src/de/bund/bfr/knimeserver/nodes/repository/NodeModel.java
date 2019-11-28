@@ -1,5 +1,10 @@
 package de.bund.bfr.knimeserver.nodes.repository;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.knime.core.data.DataRow;
+import org.knime.core.data.def.StringCell;
 import org.knime.core.node.BufferedDataTable;
 import org.knime.core.node.ExecutionContext;
 import org.knime.core.node.InvalidSettingsException;
@@ -12,6 +17,9 @@ import org.knime.core.node.port.flowvariable.FlowVariablePortObject;
 import org.knime.core.node.port.flowvariable.FlowVariablePortObjectSpec;
 import org.knime.core.node.web.ValidationError;
 import org.knime.js.core.node.AbstractWizardNodeModel;
+
+import de.bund.bfr.knimeserver.nodes.repository.ViewRepresentation.Link;
+import de.bund.bfr.knimeserver.nodes.repository.ViewRepresentation.Link.LinkType;
 
 public class NodeModel extends AbstractWizardNodeModel<ViewRepresentation, ViewValue> {
 
@@ -63,6 +71,21 @@ public class NodeModel extends AbstractWizardNodeModel<ViewRepresentation, ViewV
 
 	@Override
 	protected PortObject[] performExecute(PortObject[] inObjects, ExecutionContext exec) throws Exception {
+		
+		// Get links from input table
+		BufferedDataTable linkTable = (BufferedDataTable) inObjects[0];
+		List<Link> links = new ArrayList<>((int)linkTable.size());
+		for (DataRow row : linkTable) {
+			String linkText = ((StringCell)row.getCell(0)).getStringValue();
+			String linkUrl = ((StringCell)row.getCell(1)).getStringValue();
+			LinkType linkType = LinkType.valueOf(((StringCell)row.getCell(2)).getStringValue());
+			
+			links.add(new Link(linkText, linkUrl, linkType));
+		}
+		
+		// Update links in ViewRepresentation
+		ViewRepresentation repr = getViewRepresentation();
+		repr.links = links;
 		
 		synchronized (getLock()) {
 			// TODO: ...

@@ -9,7 +9,7 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect;
 
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 public class ViewValue extends JSONViewContent {
-
+	
 	@Override
 	public void saveToNodeSettings(NodeSettingsWO settings) {
 	}
@@ -20,17 +20,18 @@ public class ViewValue extends JSONViewContent {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
 		if (obj == null) {
 			return false;
 		}
-		if (getClass() != obj.getClass()) {
+		if (obj == this) {
+			return true;
+		}
+		if (obj.getClass() != getClass()) {
 			return false;
 		}
 		
-		// TODO: check here
+		// check here
+		// ...
 		
 		return true;
 	}
@@ -40,5 +41,4 @@ public class ViewValue extends JSONViewContent {
 		// TODO Auto-generated method stub
 		return 0;
 	}
-
 }
