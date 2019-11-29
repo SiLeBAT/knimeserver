@@ -16,7 +16,7 @@
       <node
             category-path="/bfrserver"
             deprecated="false"
-            factory-class="de.bund.bfr.knimeserver.nodes.repository.Factory">
+            factory-class="de.bund.bfr.knimeserver.nodes.repository.RepositoryFactory">
       </node>
    </extension>
    <extension

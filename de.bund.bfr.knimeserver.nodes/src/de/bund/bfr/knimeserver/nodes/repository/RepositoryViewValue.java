@@ -8,7 +8,7 @@ import org.knime.js.core.JSONViewContent;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
-public class ViewValue extends JSONViewContent {
+public class RepositoryViewValue extends JSONViewContent {
 	
 	@Override
 	public void saveToNodeSettings(NodeSettingsWO settings) {

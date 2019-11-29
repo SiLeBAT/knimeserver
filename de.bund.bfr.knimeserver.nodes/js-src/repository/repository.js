@@ -81,24 +81,19 @@
     }
 
     function createTopnav() {
-        let colorMain = "rgb(55,96,146)" // TODO: get color-Main from input
         let title1 = "FSK-Web"; // TODO: get title1 from input
 
         let topnav = document.createElement("div");
         topnav.className = "topnav";
         topnav.id = "myTopnav";
-        topnav.style = `background-color: ${colorMain};`;
+        topnav.style = `background-color: ${_representation.mainColor};`;
         topnav.innerHTML = `<h1>${title1}</h1>`;
 
         // Add links
-        _representation.links.forEach(link => {
-            let navlink = document.createElement("a");
-            navlink.className = "Nav";
-            navlink.href = link.url;
-            navlink.target = "_blank";
-            navlink.innerText = link.text;
-            navlink.appendChild(createLinkIcon(link.type));
-            topnav.appendChild(navlink);
+        let knimeTable = new kt();
+        knimeTable.setDataTable(_representation.links);
+        knimeTable.getRows().forEach(row => {
+          topnav.appendChild(createLink(row));
         });
 
         let menuLink = document.createElement("a");
@@ -121,28 +116,29 @@
         sidenav.innerHTML = '<a href="javascript:void(0)" class="closebtn">&times;</a>'
 
         // Add links
-        _representation.links.forEach(link => {
-            let navlink = document.createElement("a");
-            navlink.className = "Nav";
-            navlink.href = link.url;
-            navlink.target = "_blank";
-            navlink.innerText = link.text;
-            navlink.appendChild(createLinkIcon(link.type));
-            sidenav.appendChild(navlink);
+        let knimeTable = new kt();
+        knimeTable.setDataTable(_representation.links);
+        knimeTable.getRows().forEach(row => {
+            sidenav.appendChild(createLink(row));
         });
 
         return sidenav;
     }
 
-    function createLinkIcon(linkType) {
-        let icon = document.createElement("i");
-        icon.className = "fa";
-        if (linkType === "edition") {
-            icon.classList.add("fa-pencil");
-        } else if (linkType === "publication") {
-            icon.classList.add("fa-cloud-upload");
-        }
+    function createLink(linkRow) {
+      let navlink = document.createElement("a");
+      navlink.className = "Nav";
+      navlink.href = linkRow.data[1]; // url column
+      navlink.target = "_blank";
+      navlink.innerText = linkRow.data[0]; // text column
 
-        return icon;
+      let linkType = linkRow.data[2];
+      if (linkType === "edition") {
+        navlink.innerHTML = '<i class="fa fa-pencil"></i>';
+      } else if (linkType === "publication") {
+        navlink.innerHTML = '<i class="fa fa-cloud-upload"></i>'
+      }
+
+      return navlink;
     }
 }());

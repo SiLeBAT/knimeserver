@@ -5,12 +5,12 @@ import org.knime.core.node.NodeFactory;
 import org.knime.core.node.NodeView;
 import org.knime.core.node.wizard.WizardNodeFactoryExtension;
 
-public class Factory extends NodeFactory<NodeModel> implements
-	WizardNodeFactoryExtension<NodeModel, ViewRepresentation, ViewValue> {
+public class RepositoryFactory extends NodeFactory<RepositoryNodeModel> implements
+	WizardNodeFactoryExtension<RepositoryNodeModel, RepositoryViewRepresentation, RepositoryViewValue> {
 
 	@Override
-	public NodeModel createNodeModel() {
-		return new NodeModel();
+	public RepositoryNodeModel createNodeModel() {
+		return new RepositoryNodeModel();
 	}
 	
 	@Override
@@ -19,7 +19,7 @@ public class Factory extends NodeFactory<NodeModel> implements
 	}
 
 	@Override
-	public NodeView<NodeModel> createNodeView(int viewIndex, NodeModel nodeModel) {
+	public NodeView<RepositoryNodeModel> createNodeView(int viewIndex, RepositoryNodeModel nodeModel) {
 		return null;
 	}
 	
