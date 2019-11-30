@@ -246,9 +246,11 @@ for(i=0;i<metaDataLength;i++) {
     let uploadTime = knimeDataTable.getRows()[i].data[7];
 	
 	//create the options for the th-filters
-    filterSoft.push(Software);
+	filterSoft.push(Software);
+	
     var environmentUniform=environment.split(/[,|]/);
-    addUniformElements(environmentUniform,filterEnv);
+	addUniformElements(environmentUniform,filterEnv);
+	
     var hazardUniform=hazard.split("|");
     addUniformElements(hazardUniform,filterHaz);
 
@@ -259,21 +261,21 @@ for(i=0;i<metaDataLength;i++) {
 	var splittingNumbers = executionTime.match(/[a-zA-Z]+|[0-9]+/g);
 	var numberTimeArray = [];
 	for (a = 0; a < splittingNumbers.length; a++){
-	        //console.log(splittingNumbers)
-	        var numberTime = splittingNumbers[a]
-	        if (numberTime == "d"){
-	            numberTime = 216000;
-	        }else if (numberTime == "h"){
-	            numberTime = 3600;
-	        }else if (numberTime == "m"){
-	            numberTime = 60;
-	        }else if(numberTime == "s"){
-	            numberTime = 1;
-	        }else{
-	          numberTime  = parseInt(numberTime);
-	        };
-	        numberTimeArray.push(numberTime);
-	    }
+		//console.log(splittingNumbers)
+		var numberTime = splittingNumbers[a]
+		if (numberTime == "d"){
+			numberTime = 216000;
+		}else if (numberTime == "h"){
+			numberTime = 3600;
+		}else if (numberTime == "m"){
+			numberTime = 60;
+		}else if(numberTime == "s"){
+			numberTime = 1;
+		}else{
+			numberTime  = parseInt(numberTime);
+		};
+		numberTimeArray.push(numberTime);
+	}
     seconds = 0;
     for (a = 1; a < numberTimeArray.length; a=a+2){
         preVal = numberTimeArray[a-1];
@@ -504,15 +506,18 @@ function filterByCol(){
 	    let listFilteredEnv=[];
 	    let listFilteredHaz=[];	    
 	    for(i=0;i<searchResult.length;i++) {
-	    	    let filteredSoft = searchResult[i].getElementsByTagName("td")[3].innerText;
+	    	let filteredSoft = searchResult[i].getElementsByTagName("td")[3].innerText;
 		    let filteredEnv = searchResult[i].getElementsByTagName("td")[4].innerText;
-		    let filteredHaz = searchResult[i].getElementsByTagName("td")[5].innerText;
+			let filteredHaz = searchResult[i].getElementsByTagName("td")[5].innerText;
+			
 		    var filteredSoftUniform=filteredSoft.split(/[,|]/);
-    		    addUniformElements(filteredSoftUniform,listFilteredSoft);
-		    var filteredEnvUniform=filteredEnv.split(/[,|]/);
-    		    addUniformElements(filteredEnvUniform,listFilteredEnv);
-    		    var filteredHazUniform=filteredHaz.split("|");
-    		    addUniformElements(filteredHazUniform,listFilteredHaz);
+    		addUniformElements(filteredSoftUniform,listFilteredSoft);
+			
+			var filteredEnvUniform=filteredEnv.split(/[,|]/);
+    		addUniformElements(filteredEnvUniform,listFilteredEnv);
+			
+			var filteredHazUniform=filteredHaz.split("|");
+			addUniformElements(filteredHazUniform,listFilteredHaz);
 		}
 
 		var newFilterSoft = removeDuplicates(listFilteredSoft);
@@ -574,12 +579,14 @@ function filter() { // Declare filter() function
       	document.getElementById("numberModels").innerHTML="Your search returned  "+trs+ " models";
       });
      
-  }
+}
+
+
 if('oninput' in $search[0]) {// If browser supports input event
       $search.on('input', filter); // Use input event to call filter()
-  }else { // Otherwise
+} else { // Otherwise
       $search.on('keyup', filter); // Use keyup event to call filter()
-  }
+}
 
 // Content elements for Searchfunction
 function getText(element) {
@@ -624,45 +631,49 @@ var compare = {                           // Declare compare object
   }
 };
 
-function sortColumn(idName, column){
-  var $table = $(".sortable");              // This sortable table
-  var $tbody = $table.find('tbody');        // Store table body
-  var rows = $tbody.find('tr').toArray();   // Store array containing rows
-  console.log(rows)
-  var $header = $(idName);                  // Get the header
-  console.log($header);
-  var order = $header.data('sort');       // Get value of data-sort attribute
-  console.log(order);
-    // If selected item has ascending or descending class, reverse contents
-    if ($header.is('.ascending') || $header.is('.descending')) {  
-      $header.toggleClass('ascending descending');    // Toggle to other class
-      $tbody.append(rows.reverse());                // Reverse the array
-    } else {                                        // Otherwise perform a sort                            
-      $header.addClass('ascending');                // Add class to header
-      // Remove asc or desc from all other headers
-      $header.siblings().removeClass('ascending descending'); 
-      if (compare.hasOwnProperty(order)) {  // If compare object has method
-        console.log(column);
-        rows.sort(function(a, b) {               // Call sort() on rows array
-          a = $(a).find('td').eq(column).text().toLowerCase(); // Get text of column in row a
-          b = $(b).find('td').eq(column).text().toLowerCase(); // Get text of column in row b
-          return compare[order](a, b);           // Call compare method
-        });
-        $tbody.append(rows);
-      }
-    }
-  };
+function sortColumn(idName, column) {
+	var $table = $(".sortable");              // This sortable table
+	var $tbody = $table.find('tbody');        // Store table body
+	var rows = $tbody.find('tr').toArray();   // Store array containing rows
+	console.log(rows)
+	var $header = $(idName);                  // Get the header
+	console.log($header);
+	var order = $header.data('sort');       // Get value of data-sort attribute
+	console.log(order);
+  
+	// If selected item has ascending or descending class, reverse contents
+	if ($header.is('.ascending') || $header.is('.descending')) {  
+		$header.toggleClass('ascending descending');    // Toggle to other class
+		$tbody.append(rows.reverse());                // Reverse the array
+	} else {                                        // Otherwise perform a sort                            
+		$header.addClass('ascending');                // Add class to header
+		// Remove asc or desc from all other headers
+      	$header.siblings().removeClass('ascending descending'); 
+      	if (compare.hasOwnProperty(order)) {  // If compare object has method
+        	console.log(column);
+        	rows.sort(function(a, b) {               // Call sort() on rows array
+          		a = $(a).find('td').eq(column).text().toLowerCase(); // Get text of column in row a
+          		b = $(b).find('td').eq(column).text().toLowerCase(); // Get text of column in row b
+          		return compare[order](a, b);           // Call compare method
+			});
+        	$tbody.append(rows);
+      	}
+	}
+};
 
-  function sortSpan(idName, column){
-  var $table = $(".sortable");              // This sortable table
-  var $tbody = $table.find('tbody');        // Store table body
-  var rows = $tbody.find('tr').toArray();   // Store array containing rows
-  console.log(rows)
-  var $header = $(idName).parents('th');                  // Get the header
-  //var $header = document.getElementById(idName);
-  console.log($header);
-  var order = $header.data('sort');       // Get value of data-sort attribute
-  console.log(order);
+	function sortSpan(idName, column){
+	var $table = $(".sortable");              // This sortable table
+	var $tbody = $table.find('tbody');        // Store table body
+	var rows = $tbody.find('tr').toArray();   // Store array containing rows
+	console.log(rows)
+
+	var $header = $(idName).parents('th');                  // Get the header
+	//var $header = document.getElementById(idName);
+	console.log($header);
+
+	var order = $header.data('sort');       // Get value of data-sort attribute
+	console.log(order);
+
     // If selected item has ascending or descending class, reverse contents
     if ($header.is('.ascending') || $header.is('.descending')) {  
       $header.toggleClass('ascending descending');    // Toggle to other class
@@ -691,127 +702,113 @@ function sortColumn(idName, column){
  }
  function buildDialogWindow(event){
  	id = event.target.id.substring(6);
-          _currentModel = $${SMetadata}$$[id][0];
-		  //console.log(_currentModel);
-		  prepareData(_currentModel);
-          _currentImage = knimeDataTable.getRows()[id].data[0];
-		    try{
-				$('#imageDiv').children().remove();
-				$('#imageDiv').append("<img  style='width:100%' src='data:image/png;base64,"+_currentImage+"'/>")
-			}catch(err){
-				//console.log(err)
-			}
-		try{
-		createEMFForm();
-		}catch(err){
-			//console.log(err)
-		}
-		try{
-  		$.each(  $('html').find('style'), function( key, value ) {
-	        	
-	        	if($(value).attr('data-meta') == 'MuiInput'){
-	        		$(value).remove();
-	        	}else if($(value).attr('data-meta') == 'MuiInputLabel'){
-	        		$(value).remove();
-	        	}else if($(value).attr('data-meta') == 'MuiFormLabel'){
-	        		$(value).remove();
-	        	}
-	    	});
-          }catch(err){//console.log(err)
-			//
-			}
-        try{
-		$.each($('html').find('style'), function( key, value ) {
-        	if($(value).attr('data-meta') == 'MuiInput'){
-        		$(value).remove();
-        	}else if($(value).attr('data-meta') == 'MuiInputLabel'){
-        		$(value).remove();
-        	}else if($(value).attr('data-meta') == 'MuiFormLabel'){
-        		$(value).remove();
-        	}
-        	
-    	});
-        }catch(err){//console.log(err)
-			////
-		}
-        try{
-        
-        // tbody :has(td):not(:contains("No data"))
-		
-        //$('table td :contains("No data")').parent().parent().parent().remove();
-		setTimeout(function(){ $("td:contains('No data')").parent().parent().parent().parent().parent().remove();}, 1000);
-		
-        $('.MuiFormLabel-root-100').css('font-size','1.5rem');
-        $('.MuiDialog-paper-128').css('display','inline');
-        $('.MuiDialog-paper-128').css('max-height','');
-        $('.MuiDialog-paper-128').css('overflow-y','visible');
+	 _currentModel = $${SMetadata}$$[id][0];
+	 
+	//console.log(_currentModel);
+	prepareData(_currentModel);
+	_currentImage = knimeDataTable.getRows()[id].data[0];
+	try{
+		$('#imageDiv').children().remove();
+		$('#imageDiv').append("<img  style='width:100%' src='data:image/png;base64,"+_currentImage+"'/>")
+	}catch(err){
+		//console.log(err)
+	}
 
-        $(".MuiTable-root-222 thead").removeAttr('class');
-        $(".MuiTable-root-222 thead tr").removeAttr('class');
-        $(".MuiTable-root-222 thead tr th").removeAttr('class');
-        $(".MuiTable-root-222 thead tr th th").removeAttr('class');
-        $(".MuiTable-root-222 tbody").removeAttr('class');
-        $(".MuiTable-root-222 tbody tr").removeAttr('class');
-        $(".MuiTable-root-222 tbody tr td").removeAttr('class');
-        $(".MuiTable-root-222 tbody tr td div").removeAttr('class');
-        $(".MuiTable-root-222 tbody tr td div div").removeAttr('class');
-        $(".MuiTable-root-222 tbody tr td div div div").removeAttr('class');
-      
-	   $('.MuiTable-root-222').addClass('table'); 
-	   $('.MuiTable-root-222').parent().addClass('table-responsive');
-	   //$('.table-responsive:not(:has(td))').css("background-color", "red");
-	   /*.filter(function() {
+	try {
+		createEMFForm();
+	} catch(err){
+		//console.log(err)
+	}
+
+	try{
+		$.each(  $('html').find('style'), function( key, value ) {
+			if($(value).attr('data-meta') == 'MuiInput'){ $(value).remove(); }
+			else if($(value).attr('data-meta') == 'MuiInputLabel') { $(value).remove(); }
+			else if($(value).attr('data-meta') == 'MuiFormLabel') { $(value).remove(); }
+		});
+	} catch(err){//console.log(err)
+		//
+	}
+
+	try {
+		$.each($('html').find('style'), function( key, value ) {
+			if($(value).attr('data-meta') == 'MuiInput'){$(value).remove();}
+			else if($(value).attr('data-meta') == 'MuiInputLabel'){$(value).remove();}
+			else if($(value).attr('data-meta') == 'MuiFormLabel'){$(value).remove();}
+		});
+	} catch(err) { //console.log(err)
+		////
+	}
+
+	try {	
+		// tbody :has(td):not(:contains("No data"))
+		
+		//$('table td :contains("No data")').parent().parent().parent().remove();
+		setTimeout(function(){ $("td:contains('No data')").parent().parent().parent().parent().parent().remove();}, 1000);
+	
+		$('.MuiFormLabel-root-100').css('font-size','1.5rem');
+		$('.MuiDialog-paper-128').css('display','inline');
+		$('.MuiDialog-paper-128').css('max-height','');
+		$('.MuiDialog-paper-128').css('overflow-y','visible');
+
+		$(".MuiTable-root-222 thead").removeAttr('class');
+		$(".MuiTable-root-222 thead tr").removeAttr('class');
+		$(".MuiTable-root-222 thead tr th").removeAttr('class');
+		$(".MuiTable-root-222 thead tr th th").removeAttr('class');
+		$(".MuiTable-root-222 tbody").removeAttr('class');
+		$(".MuiTable-root-222 tbody tr").removeAttr('class');
+		$(".MuiTable-root-222 tbody tr td").removeAttr('class');
+		$(".MuiTable-root-222 tbody tr td div").removeAttr('class');
+		$(".MuiTable-root-222 tbody tr td div div").removeAttr('class');
+		$(".MuiTable-root-222 tbody tr td div div div").removeAttr('class');
+	
+		$('.MuiTable-root-222').addClass('table'); 
+		$('.MuiTable-root-222').parent().addClass('table-responsive');
+		//$('.table-responsive:not(:has(td))').css("background-color", "red");
+		/*.filter(function() {
 			console.log($(this).find('td').length, $(this));
 			$(this).append("Some appended text.")
 			return $(this).find('td').length == 0;
 		})*/
-	   //$('.MuiTooltip-root-198:has(button)').parent().parent().parent().remove();
-	   //$('.MuiBadge-root-277').parent().remove();
-	   
-       $('.MuiTable-root-222').removeClass('MuiTable-root-222'); 
-       
-       $('.MuiFormControl-root-90').addClass('form-group');
-        $('.MuiGrid-typeContainer-1').css('display','inline');
-		}catch(err){//console.log(err)
-			///
-		}try{
-       
-	   /*$.each($('input[type=text]'), function( index, value ) {
-			//console.log(this);
-			this.size = ( this.value.length > 10 ) ? this.value.length : 10;
-		});*/
-	   }catch(err){//console.log(err)
-			//
-		}
-		$('#filter-search').attr("disabled", false);
-	   //$('label').removeAttr('class');
-	   //$('.MuiFormLabel-root-100').removeAttr('class');
-	   //$('label').addClass('without-transform');
-	   
-	   $('.MuiInput-underline-110').addClass('without-after-element');
-	   try{
-	   postJSONFormBuilt(_currentModel);
-	   }catch(err){//console.log(err)
-			//
-		}
+		//$('.MuiTooltip-root-198:has(button)').parent().parent().parent().remove();
+		//$('.MuiBadge-root-277').parent().remove();
 		
-     /*   $(document.body).delegate('input:text', 'focusin', function(e) {
-        	
-            
-        });*/
-        $('.replaced').parent().addClass('panel'); 
-        $('.replaced').parent().addClass('panel-default'); 
-        $('.replaced').addClass('panel-body'); 
-        //$($("[aria-describedby*='tooltip-add']")[0]).off();
-        function makeId(words) {
-            var n = words.split("Add to ");
-            m = n[n.length - 1].replace(/\s/g, '');
-            return m[0] == undefined?"":m[0].toLowerCase()+""+m.substring(1);
+		$('.MuiTable-root-222').removeClass('MuiTable-root-222'); 
+		
+		$('.MuiFormControl-root-90').addClass('form-group');
+		$('.MuiGrid-typeContainer-1').css('display','inline');
+	} catch(err){//console.log(err)
+		///
+	}
+	
+	try{
+	} catch(err){//console.log(err)
+	}
 
-        }
-        /*$($("[aria-describedby*='tooltip-add']")).attr('data-toggle','modal');
-        $($("[aria-describedby*='tooltip-add']")).attr('data-target','#myModal');*/
-		try{
+	$('#filter-search').attr("disabled", false);
+	//$('label').removeAttr('class');
+	//$('.MuiFormLabel-root-100').removeAttr('class');
+	//$('label').addClass('without-transform');
+	   
+	$('.MuiInput-underline-110').addClass('without-after-element');
+	
+	try{
+	   postJSONFormBuilt(_currentModel);
+	} catch(err){//console.log(err)
+		//
+	}
+
+	$('.replaced').parent().addClass('panel'); 
+	$('.replaced').parent().addClass('panel-default'); 
+	$('.replaced').addClass('panel-body'); 
+		
+	function makeId(words) {
+		var n = words.split("Add to ");
+		m = n[n.length - 1].replace(/\s/g, '');
+		return m[0] == undefined?"":m[0].toLowerCase()+""+m.substring(1);
+	}
+
+	try{
 	   $($("[aria-describedby*='tooltip-add']")).click(function(event) {
         	
         	currentArea = makeId($(this).attr('aria-label'));
@@ -821,97 +818,94 @@ function sortColumn(idName, column){
             $('#'+currentArea).modal('show');
         });
 		
-        }catch(err){//console.log(err)
-			//
-		}
+	} catch(err){//console.log(err)
+		//
+	}
 		
+	$('#titleOfCurrentModel').html(_currentModel.generalInformation.name);
+	
+	//window.generalInformation = _currentModel.generalInformation;
+	
+		window.store1.dispatch(Actions.init(_currentModel.generalInformation, window.schema, window.uischema));
+	//window.scope =  _currentModel.scope;
+		window.store2.dispatch(Actions.init(_currentModel.scope, window.schema2, window.uischema2));
+	//window.modelMath =  _currentModel.modelMath;
+		window.store17.dispatch(Actions.init(_currentModel.modelMath, window.schema17, window.uischema17));
+	//window.dataBackground =  _currentModel.dataBackground;
+		window.store6.dispatch(Actions.init(_currentModel.dataBackground, window.schema6, window.uischema6));
 		
-		$('#titleOfCurrentModel').html(_currentModel.generalInformation.name);
-		
-		//window.generalInformation = _currentModel.generalInformation;
-		
-			window.store1.dispatch(Actions.init(_currentModel.generalInformation, window.schema, window.uischema));
-		//window.scope =  _currentModel.scope;
-			window.store2.dispatch(Actions.init(_currentModel.scope, window.schema2, window.uischema2));
-		//window.modelMath =  _currentModel.modelMath;
-			window.store17.dispatch(Actions.init(_currentModel.modelMath, window.schema17, window.uischema17));
-		//window.dataBackground =  _currentModel.dataBackground;
-			window.store6.dispatch(Actions.init(_currentModel.dataBackground, window.schema6, window.uischema6));
-		
-		$('#currentModel').modal('show');
-	    $('.modal-content').resizable({
-				//alsoResize: ".modal-dialog",
-				//minHeight: 150
-		});
-		$('.modal-dialog').draggable();
-		$( "div[data-placement='top']" ).css('position','');
-		$('label').removeAttr('class');
-		
-		$('.MuiFormHelperText-root-119').remove();
-		$('.MuiBadge-root-277').remove();
-		$(event.target).button('reset');
-		$('input[type=text]').removeAttr('class');
-	   $('input[type=text]').addClass('form-control');
-	   $('input[type=text]').addClass('input-sm');
-	   $('#currentModel input').attr("readonly", true);
-	   $('#currentModel input:text').filter(function() { return $(this).val() == ""; }).parent().parent().parent().remove();
-	   $('.demoform').filter(function( index ) {
-			 if($( this ).find('input').length == 0) 
-				return this ;
-		}).remove();
-		$('.MuiFormControl-root-90').filter(function( index ) {
-			 if($( this ).find('input').length == 0) 
-				return this ;
-		}).remove();
-		
-	   $('input[type=text]').focusin(function() {
-				  $('.MuiInput-root-104').removeAttr('class');
-				  $.each(  $( this ).parent().parent().find("label"), function( key, label ) {
-	        	
-						$( label ).removeAttr('class');
-						$( label ).attr('data-shrink',false);
-						$('.MuiFormLabel-root-100').removeAttr('class');
+	$('#currentModel').modal('show');
+	$('.modal-content').resizable({
+			//alsoResize: ".modal-dialog",
+			//minHeight: 150
+	});
+	$('.modal-dialog').draggable();
+	$( "div[data-placement='top']" ).css('position','');
+	$('label').removeAttr('class');
+	
+	$('.MuiFormHelperText-root-119').remove();
+	$('.MuiBadge-root-277').remove();
+	$(event.target).button('reset');
+	$('input[type=text]').removeAttr('class');
+	$('input[type=text]').addClass('form-control');
+	$('input[type=text]').addClass('input-sm');
+	$('#currentModel input').attr("readonly", true);
+	$('#currentModel input:text').filter(function() { return $(this).val() == ""; }).parent().parent().parent().remove();
 
-	        	
-					});
-				  
+	$('.demoform').filter(function( index ) {
+			if($( this ).find('input').length == 0) 
+			return this ;
+	}).remove();
+	$('.MuiFormControl-root-90').filter(function( index ) {
+			if($( this ).find('input').length == 0) 
+			return this ;
+	}).remove();
+		
+	$('input[type=text]').focusin(function() {
+		$('.MuiInput-root-104').removeAttr('class');
+		$.each(  $( this ).parent().parent().find("label"), function( key, label ) {
+			$( label ).removeAttr('class');
+			$( label ).attr('data-shrink',false);
+			$('.MuiFormLabel-root-100').removeAttr('class');
 		});
+	});
 
-		$( 'table' ).find("[type=text]").removeAttr('class');
-		try{
-			$("svg").parent().parent().parent().hide();
-			notAProperDiv = $("div:contains('No applicable'):not(:has(div))");
-			////console.log('notAProperDiv '+notAProperDiv);
-			$.each(notAProperDiv, function( index, value ) {
-				$(value).remove();
-				
-			});
-			$('.MuiInput-underline-110').addClass('without-after-element');
-			$.each($('#currentModel table input[value!=""]'),function(index , val){
-					var currentheadertr = $(this).parent().parent().parent().parent().parent().parent().parent().find('thead tr');
-					var currenttbody = $(this).parent().parent().parent().parent().parent().parent();
-					var currenttr = $(this).parent().parent().parent().parent().parent();
-					var currenttd = $(this).parent().parent().parent().parent();
-					
-					var indexx = currenttr.find('td').index( currenttd );
-					var currentthead = $(currentheadertr.find('th').get(indexx));
-					currentthead.prependTo(currentheadertr);
-					$.each(currenttbody.find('tr'),function(index , ctr){
-						//console.log($(ctr),$(ctr).find("td").get(indexx));
-						$($(ctr).find("td").get(indexx)).prependTo(ctr);
-					});
-					
-					
-					//$(this).parent().parent().parent().parent().prependTo($(this).parent().parent().parent().parent().parent());
-					////console.log($($(this).parent().parent().parent().parent().parent()),$($(this).parent().parent().parent().parent().parent()).find("td"),$(this).parent().parent().parent().parent(),index);
-			});
-		}catch(err){//console.log(err)
-			//
-		}
+	$( 'table' ).find("[type=text]").removeAttr('class');
+	try{
 		$("svg").parent().parent().parent().hide();
-		
-          }
-         var selectedBox = null;
+		notAProperDiv = $("div:contains('No applicable'):not(:has(div))");
+		////console.log('notAProperDiv '+notAProperDiv);
+		$.each(notAProperDiv, function( index, value ) {
+			$(value).remove();
+			
+		});
+		$('.MuiInput-underline-110').addClass('without-after-element');
+		$.each($('#currentModel table input[value!=""]'),function(index , val){
+				var currentheadertr = $(this).parent().parent().parent().parent().parent().parent().parent().find('thead tr');
+				var currenttbody = $(this).parent().parent().parent().parent().parent().parent();
+				var currenttr = $(this).parent().parent().parent().parent().parent();
+				var currenttd = $(this).parent().parent().parent().parent();
+				
+				var indexx = currenttr.find('td').index( currenttd );
+				var currentthead = $(currentheadertr.find('th').get(indexx));
+				currentthead.prependTo(currentheadertr);
+				$.each(currenttbody.find('tr'),function(index , ctr){
+					//console.log($(ctr),$(ctr).find("td").get(indexx));
+					$($(ctr).find("td").get(indexx)).prependTo(ctr);
+				});
+				
+				
+				//$(this).parent().parent().parent().parent().prependTo($(this).parent().parent().parent().parent().parent());
+				////console.log($($(this).parent().parent().parent().parent().parent()),$($(this).parent().parent().parent().parent().parent()).find("td"),$(this).parent().parent().parent().parent(),index);
+		});
+	}catch(err){//console.log(err)
+		//
+	}
+	
+	$("svg").parent().parent().parent().hide();
+}  // buildDialogWindow
+
+var selectedBox = null;
 
 //*********************Color****************************//
 var mainColor =  "$${SColor-Main}$$";

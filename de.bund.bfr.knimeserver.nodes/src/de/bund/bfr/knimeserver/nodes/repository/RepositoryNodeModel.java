@@ -92,6 +92,7 @@ public class RepositoryNodeModel extends AbstractWizardNodeModel<RepositoryViewR
 				repr.hoverColor = peekFlowVariableString("Color Hover");
 				repr.title1 = peekFlowVariableString("Titel1");
 				repr.title2 = peekFlowVariableString("Titel2");
+				repr.metadata = peekFlowVariableString("Metadata");
 			}
 
 			// TODO: ...

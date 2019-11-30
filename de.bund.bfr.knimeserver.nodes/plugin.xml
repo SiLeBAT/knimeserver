@@ -56,6 +56,9 @@
          <webDependency
                webResourceBundleID="KnimeTable_1.0.0">
          </webDependency>
+         <webDependency
+               webResourceBundleID="bootstrap_3.3.6">
+         </webDependency>
       </webResourceBundle>
    </extension>
    <!--

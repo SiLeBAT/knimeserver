@@ -14,12 +14,14 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect;
 public class RepositoryViewRepresentation extends JSONViewContent {
 
 	JSONDataTable links;
+	JSONDataTable basicModelInformation;
+
 	String mainColor;
 	String buttonColor;
 	String hoverColor;
 	String title1;
 	String title2;
-	JSONDataTable basicModelInformation;
+	String metadata;
 
 	@Override
 	public void saveToNodeSettings(NodeSettingsWO settings) {
@@ -44,12 +46,12 @@ public class RepositoryViewRepresentation extends JSONViewContent {
 		final RepositoryViewRepresentation other = (RepositoryViewRepresentation) obj;
 		return links.equals(other.links) && mainColor.equals(other.mainColor) && buttonColor.equals(other.buttonColor)
 				&& hoverColor.equals(other.hoverColor) && title1.equals(other.title1) && title2.equals(title2)
-				&& basicModelInformation.equals(other.basicModelInformation);
+				&& basicModelInformation.equals(other.basicModelInformation) && metadata.equals(other.metadata);
 	}
 
 	@Override
 	public int hashCode() {
 		return Objects.hash(links, mainColor, buttonColor, hoverColor, title1, title2, basicModelInformation,
-				basicModelInformation);
+				basicModelInformation, metadata);
 	}
 }
