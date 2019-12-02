@@ -133,8 +133,21 @@
       // Hidden sidenav
       $(".sidenav").css("background-color", _representation.mainColor);
 
-      // selects
+      // Selects
       $("#soft, #env, #haz").css("color", _representation.mainColor);
+
+      // Buttons
+      $(".topnav a.Nav").css("background-color", _representation.mainColor)
+      $(".detailsButton, .downloadButton").css({
+        "background-color": _representation.buttonColor,
+        "color": "white",
+        "width": "90px"
+      });
+      $("#clear").css({
+        "color": _representation.mainColor,
+        "opacity": "0.5"
+      });
+      $(".fa-remove").css("color", _representation.hoverColor);
 
       // table head:hover
       $("th.actives.ascending, th.actives.descending, table.sortable th.actives").hover((mouse) => {
@@ -329,7 +342,7 @@
           <td>${uploadTime}</td>
           <td>
             <button type="button" class="btn btn-primary detailsButton"
-            data-loading-text='<i class="&#145;fa fa-spinner fa-spin&#145;"></i> Processing...'
+            data-loading-text='<i class="fa fa-spinner fa-spin"></i> Processing...'
             id="opener${i}">Details</button>
             <br>
             <br>
