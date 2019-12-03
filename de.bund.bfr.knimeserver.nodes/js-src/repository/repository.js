@@ -77,7 +77,7 @@
       fillTable();
 
       // Populate cache
-      $(".table tbody tr").each(() => {
+      $(".table tbody tr").each(function() {
         let rawText = getText(this);
         let formattedText = rawText ? rawText.trim().toLowerCase() : "";
 
@@ -673,18 +673,18 @@
     }
 
     function filter() {
-      let query = this.value ? this.value.trim().toLowerCase() : ""; // Get the query
+      let query = this.value == undefined? "": this.value.trim().toLowerCase(); // Get the query
       
       // TODO: what is p???
-      _cache.forEach((p) => { // For each entry in cache pass image
-        let index = 0; // Set index to 0
+      _cache.forEach(function(p) { // For each entry in cache pass image
+        var index = 0; // Set index to 0
         if (query) { // If there is some query text
-          index = p.text.indexOf(query); // Find if query text is in there
+            index = p.text.indexOf(query); // Find if query text is in there
         }
 
         p.element.style.display = index === -1 ? "none" : ""; // Show/Hide
         let numberOfVisibleRows = $("tbody tr:visible").length;
-        numberModelsDiv.innerHTML = `Your search returned ${numberOfVisibleRows} models`;
+        document.getElementById("numberModels").innerHTML = `Your search returned ${numberOfVisibleRows} models`;
       })
     }
 
