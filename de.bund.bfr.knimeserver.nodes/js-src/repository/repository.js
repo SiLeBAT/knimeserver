@@ -330,7 +330,6 @@
         addUniformElements(hazard.split("|"), _hazardSet);
 
         // Add row to table
-        // $("#rows").append(`<tr id="`)
         $("#rows").append(`<tr id="${currentRow.rowKey}">
           <td><input type="checkbox" class="checkbox1" name="${i}"></td>
           <td>${modelName}</td>
@@ -381,6 +380,19 @@
           $('#rows tr').show();
           $("#filter-search").val("Search");
           $("#numberModels").fadeOut();
+
+          // Clear selects
+          let softwareSelect = document.getElementById("soft");
+          softwareSelect.options.length = 1;
+          softwareSelect.value = "Select";
+
+          let environmentSelect = document.getElementById("env");
+          environmentSelect.options.length = 1;
+          environmentSelect.value = "Select";
+
+          let hazardSelect = document.getElementById("haz");
+          hazardSelect.options.length = 1;
+          hazardSelect.value = "Select";
         });
 
         // Clear the selects of the different filters on button press
@@ -578,14 +590,17 @@
       let softwareSelect = document.getElementById("soft");
       softwareSelect.options.length = 1;
       populateSelect(softwareSelect, softwareSet);
+      softwareSelect.value = select1;
 
       let environmentSelect = document.getElementById("env");
       environmentSelect.options.length = 1;
       populateSelect(environmentSelect, environmentSet);
+      environmentSelect.value = select2;
 
       let hazardSelect = document.getElementById("haz");
       hazardSelect.options.length = 1;
       populateSelect(hazardSelect, hazardSet);
+      hazardSelect.value = select3;
 
       // If no filters, restore the selects and numberModelsDiv
       if (filt == "") {
