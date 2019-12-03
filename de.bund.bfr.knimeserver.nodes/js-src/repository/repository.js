@@ -416,6 +416,25 @@
         $("#col5").click(() => sortSpan("#col5", 5));
         $("#col6").click(() => sortColumn("#col6", 6));
         $("#col7").click(() => sortColumn("#col7", 7));
+
+        // Handle model selection. Only one row (model) can be selected and the
+        // view value is updated with the current selection
+        let selectedBox = null;
+        $('.checkbox1').click(function() {
+          selectedBox = this.name;
+          $('.checkbox1').each(function() {
+            if (this.name == selectedBox) {
+              this.checked = true;
+              $(this).closest("tr").css("background-color", "#e1e3e8");
+            } else {
+              this.checked = false;
+              $(this).closest("tr").css("background-color", "transparent");
+            };
+          });
+          
+          // save selected model
+          _value.selectedModel = modelInformation.getRows()[selectedBox].rowKey;
+        });
       });
     }
 

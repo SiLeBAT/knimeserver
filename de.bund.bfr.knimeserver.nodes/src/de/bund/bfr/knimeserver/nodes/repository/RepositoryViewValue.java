@@ -1,5 +1,7 @@
 package de.bund.bfr.knimeserver.nodes.repository;
 
+import java.util.Objects;
+
 import org.knime.core.node.InvalidSettingsException;
 import org.knime.core.node.NodeSettingsRO;
 import org.knime.core.node.NodeSettingsWO;
@@ -9,6 +11,9 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect;
 
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 public class RepositoryViewValue extends JSONViewContent {
+	
+	/** Row key of the row containing the selected model in the repository. */
+	String selectedModel = "";
 	
 	@Override
 	public void saveToNodeSettings(NodeSettingsWO settings) {
@@ -30,15 +35,12 @@ public class RepositoryViewValue extends JSONViewContent {
 			return false;
 		}
 		
-		// check here
-		// ...
-		
-		return true;
+		final RepositoryViewValue other = (RepositoryViewValue) obj;
+		return selectedModel.equals(other.selectedModel);
 	}
 
 	@Override
 	public int hashCode() {
-		// TODO Auto-generated method stub
-		return 0;
+		return Objects.hash(selectedModel);
 	}
 }

@@ -76,6 +76,8 @@ public class RepositoryNodeModel extends AbstractWizardNodeModel<RepositoryViewR
 	@Override
 	protected PortObject[] performExecute(PortObject[] inObjects, ExecutionContext exec) throws Exception {
 
+		final String selectedModel;
+		
 		synchronized (getLock()) {
 
 			RepositoryViewRepresentation repr = getViewRepresentation();
@@ -94,12 +96,11 @@ public class RepositoryNodeModel extends AbstractWizardNodeModel<RepositoryViewR
 				repr.title2 = peekFlowVariableString("Titel2");
 				repr.metadata = peekFlowVariableString("Metadata");
 			}
-
-			// TODO: ...
+			
+			selectedModel = getViewValue().selectedModel;
 		}
 
-		// TODO: Row0 is a placeholder. Replace from view value.
-		pushFlowVariableString("selectedModel", "Row0");
+		pushFlowVariableString("selectedModel", selectedModel);
 
 		return new PortObject[] { FlowVariablePortObject.INSTANCE };
 	}
