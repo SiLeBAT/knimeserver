@@ -563,17 +563,28 @@
       let environmentSet = new Set();
       let hazardSet = new Set();
 
-      for (let row of searchResult) {
+      // for (let row of searchResult) {
 
-        let software = row.getElementsByTagName("td")[3].innerText; // 3rd td
-        let environment = row.getElementsByTagName("td")[4].innerText; // 4th td
-        let hazard = row.getElementsByTagName("td")[5].innerText; // 5th td
+      //   let software = row.getElementsByTagName("td")[3].innerText; // 3rd td
+      //   let environment = row.getElementsByTagName("td")[4].innerText; // 4th td
+      //   let hazard = row.getElementsByTagName("td")[5].innerText; // 5th td
       
+      //   // Split some entries joined with commas
+      //   addUniformElements(software.split(/[,|]/), softwareSet);
+      //   addUniformElements(environment.split(/[,|]/), environmentSet);
+      //   addUniformElements(hazard.split(/[,|]/), hazardSet);
+      // }
+
+      for (let i = 0; i < searchResult.length; i++) {
+        let software = searchResult[i].getElementsByTagName("td")[3].innerText;
+		    let environment = searchResult[i].getElementsByTagName("td")[4].innerText;
+        let hazard = searchResult[i].getElementsByTagName("td")[5].innerText;
+        
         // Split some entries joined with commas
         addUniformElements(software.split(/[,|]/), softwareSet);
         addUniformElements(environment.split(/[,|]/), environmentSet);
         addUniformElements(hazard.split(/[,|]/), hazardSet);
-      };
+      }
 
       // Clear filters and populated them with the filtered results
       let softwareSelect = document.getElementById("soft");
