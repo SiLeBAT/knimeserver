@@ -563,18 +563,6 @@
       let environmentSet = new Set();
       let hazardSet = new Set();
 
-      // for (let row of searchResult) {
-
-      //   let software = row.getElementsByTagName("td")[3].innerText; // 3rd td
-      //   let environment = row.getElementsByTagName("td")[4].innerText; // 4th td
-      //   let hazard = row.getElementsByTagName("td")[5].innerText; // 5th td
-      
-      //   // Split some entries joined with commas
-      //   addUniformElements(software.split(/[,|]/), softwareSet);
-      //   addUniformElements(environment.split(/[,|]/), environmentSet);
-      //   addUniformElements(hazard.split(/[,|]/), hazardSet);
-      // }
-
       for (let i = 0; i < searchResult.length; i++) {
         let software = searchResult[i].getElementsByTagName("td")[3].innerText;
 		    let environment = searchResult[i].getElementsByTagName("td")[4].innerText;
@@ -618,7 +606,7 @@
       let order = header.data("sort"); // Get data-sort attribute
 
       // If selected item has ascending or descending class, reverse contents
-      if (header.is('.ascending') || $header.is('.descending')) {  
+      if (header.is('.ascending') || header.is('.descending')) {  
         header.toggleClass('ascending descending');    // Toggle to other class
         tbody.append(rows.reverse());                // Reverse the array
       } else {                                        // Otherwise perform a sort                            
@@ -643,10 +631,10 @@
     
       let header = $(idName).parents('th');                  // Get the header
     
-      let order = $header.data('sort');       // Get value of data-sort attribute
+      let order = header.data('sort');       // Get value of data-sort attribute
     
       // If selected item has ascending or descending class, reverse contents
-      if (header.is('.ascending') || $header.is('.descending')) {  
+      if (header.is('.ascending') || header.is('.descending')) {  
         header.toggleClass('ascending descending');    // Toggle to other class
         tbody.append(rows.reverse());                // Reverse the array
       } else {                                        // Otherwise perform a sort                            
