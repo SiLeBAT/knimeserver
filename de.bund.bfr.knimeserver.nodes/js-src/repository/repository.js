@@ -597,9 +597,9 @@
 
   class HealthModel {
 
-    constructor() {
+    constructor(metadata, img) {
       this.menus = this._createMenus();
-      // TODO: this.panels
+      this.panels = this._createPanels(metadata, img);
     }
 
     _createMenus() {
@@ -620,8 +620,36 @@
         { "id": "parameter", "label": "Parameter" },
         { "id": "qualityMeasures", "label": "Quality measures" },
         { "id": "modelEquation", "label": "Model equation" },
-        { "id": "exposure", "label": "Exposure" }]);
-      // TODO: add model plot tab
+        { "id": "exposure", "label": "Exposure" }]) +
+        `<li role="presentation">
+          <a id="plot-tab" href="#plot"
+            aria-controls="plot" role="tab" data-toggle="tab">Model Plot</a>
+        </li>`;
+    }
+
+    _createPanels(metadata, img) {
+      let schema = schemas.healthModel;
+      return {
+        generalInformation: createSimplePanel("General information", schema.generalInformation, metadata.generalInformation),
+        modelCategory: createSimplePanel("Model category", schema.modelCategory, metadata.modelCategory),
+        author: createComplexPanel("Author", schema.contact, metadata.author),
+        creator: createComplexPanel("Creator", schema.contact, metadata.creator),
+        reference: createComplexPanel("Reference", schema.reference, metadata.reference),
+        scopeGeneral: createSimplePanel("General", schema.scope, metadata.scope),
+        hazard: createComplexPanel("Hazard", schema.hazard, metadata.hazard),
+        population: createComplexPanel("Population", schema.populationGroup, metadata.populationGroup),
+        study: createSimplePanel("Study", schema.study, metadata.study),
+        studySample: createComplexPanel("Study sample", schema.studySample, metadata.studySample),
+        dietaryAssessmentMethod: createComplexPanel("Dietary assessment method", schema.dietaryAssessmentMethod, metadata.dietaryAssessmentMethod),
+        laboratory: createComplexPanel("Laboratory", schema.laboratory, metadata.laboratory),
+        assay: createComplexPanel("Assay", schema.assay, metadata.assay),
+        modelMath: createSimplePanel("Model math", schema.modelMath, metadata.modelMath),
+        parameter: createComplexPanel("Parameter", schema.parameter, metadata.modelMath.parameter),
+        qualityMeasures: createComplexPanel("Quality measures", schema.qualityMeasures, metadata.modelMath.qualityMeasures),
+        modelEquation: createComplexPanel("Model equation", schema.modelEquation, metadata.modelMath.modelEquation),
+        exposure: createComplexPanel("Exposure", schema.exposure, metadata.modelMath.exposure),
+        plot: createPlotPanel(img) 
+      };
     }
   }
 
@@ -1470,7 +1498,7 @@
       } else if (_representation.metadata.modelType === "consumptionModel") {
         handler = new ConsumptionModel(metadata, image);
       } else if (_representation.metadata.modelType === "healthModel") {
-        handler = new HealthModel();
+        handler = new HealthModel(metadata, image);
       } else if (_representation.metadata.modelType === "riskModel") {
         handler = new RiskModel();
       } else if (_representation.metadata.modelType === "qraModel") {
