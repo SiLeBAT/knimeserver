@@ -1,5 +1,379 @@
 (repository_namespace = function() {
 
+  // Metadata handlers for the display view
+
+  /**
+   * Create a Bootstrap dropdown menu.
+   * @param {string} name Menu name 
+   * @param {array} submenus Array of hashes of id and name of the submenus.
+   */
+  function createSubMenu(name, submenus) {
+
+    return `<li class="dropdown">
+      <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button"
+        aria-haspopup="true" aria-expanded="false">${name}<span class="caret"></a>
+      <ul class="dropdown-menu">
+      ${submenus.map(entry => `<li><a href="#${entry.id}" aria-controls="#${entry.id}"
+        role="button" data-toggle="tab">${entry.label}</a></li>`).join("")}
+      </ul>
+    </li>`;
+  }
+
+  class GenericModel {
+
+    constructor() {
+      this.menus = this._createMenus();
+      // this.panels
+    }
+
+    _createMenus() {
+      return createSubMenu("General information", [
+        { "id": "generalInformation", "label": "General" },
+        { "id": "modelCategory", "label": "Model category" },
+        { "id": "author", "label": "Author" },
+        { "id": "creator", "label": "Creator" },
+        { "id": "reference", "label": "Reference" }]) +
+        createSubMenu("Scope", [{ "id": "scopeGeneral", "label": "General" },
+        { "id": "product", "label": "Product" },
+        { "id": "hazard", "label": "Hazard" },
+        { "id": "population", "label": "Population group" }]) +
+        createSubMenu("Data Background", [{ "id": "study", "label": "Study" },
+        { "id": "studySample", "label": "Study sample" },
+        { "id": "dietaryAssessmentMethod", "label": "Dietary assessment method" },
+        { "id": "laboratory", "label": "Laboratory" },
+        { "id": "assay", "label": "Assay" }]) +
+        createSubMenu("Model math", [{ "id": "modelMath", "label": "General" },
+        { "id": "parameter", "label": "Parameter" },
+        { "id": "qualityMeasures", "label": "Quality measures" },
+        { "id": "modelEquation", "label": "Model equation" },
+        { "id": "exposure", "label": "Exposure" }]);
+        // TODO: add model plot tab
+    }
+  }
+
+  class DataModel {
+
+    constructor() {
+      this.menus = this._createMenus();
+      // TODO: this.panels
+    }
+
+    _createMenus() {
+      return createSubMenu("General information", [
+        { "id": "generalInformation", "label": "General" },
+        { "id": "author", "label": "Author" },
+        { "id": "creator", "label": "Creator" },
+        { "id": "reference", "label": "Reference" }]) +
+        createSubMenu("Scope", [{ "id": "scopeGeneral", "label": "General" },
+        { "id": "product", "label": "Product" },
+        { "id": "hazard", "label": "Hazard" },
+        { "id": "population", "label": "Population group" }]) +
+        createSubMenu("Data Background", [{ "id": "study", "label": "Study" },
+        { "id": "studySample", "label": "Study sample" },
+        { "id": "dietaryAssessmentMethod", "label": "Dietary assessment method" },
+        { "id": "laboratory", "label": "Laboratory" },
+        { "id": "assay", "label": "Assay" }]) +
+        createSubMenu("Model math", [{ "id": "parameter", "label": "Parameter" }]);
+        // TODO: add model plot tab
+    }
+  }
+
+  class PredictiveModel {
+
+    constructor() {
+      this.menus = this._createMenus();
+      // TODO: this.panels
+    }
+
+    _createMenus() {
+      return createSubMenu("General information", [
+        { "id": "generalInformation", "label": "General" },
+        { "id": "author", "label": "Author" },
+        { "id": "creator", "label": "Creator" },
+        { "id": "reference", "label": "Reference" }]) +
+        createSubMenu("Scope", [{ "id": "scopeGeneral", "label": "General" },
+        { "id": "product", "label": "Product" },
+        { "id": "hazard", "label": "Hazard" }]) +
+        createSubMenu("Data Background", [{ "id": "study", "label": "Study" },
+        { "id": "studySample", "label": "Study sample" },
+        { "id": "laboratory", "label": "Laboratory" },
+        { "id": "assay", "label": "Assay" }]) +
+        createSubMenu("Model math", [{ "id": "parameter", "label": "Parameter" }]);
+        // TODO: add model plot tab
+    }
+  }
+
+  class OtherModel {
+
+    constructor() {
+      this.menus = this._createMenus();
+      // TODO: this.panels
+    }
+
+    _createMenus() {
+      return createSubMenu("General information", [
+        { "id": "generalInformation", "label": "General" },
+        { "id": "modelCategory", "label": "Model category" },
+        { "id": "author", "label": "Author" },
+        { "id": "creator", "label": "Creator" },
+        { "id": "reference", "label": "Reference" }]) +
+        createSubMenu("Scope", [{ "id": "scopeGeneral", "label": "General" },
+        { "id": "product", "label": "Product" },
+        { "id": "hazard", "label": "Hazard" },
+        { "id": "population", "label": "Population group" }]) +
+        createSubMenu("Data Background", [{ "id": "study", "label": "Study" },
+        { "id": "studySample", "label": "Study sample" },
+        { "id": "laboratory", "label": "Laboratory" },
+        { "id": "assay", "label": "Assay" }]) +
+        createSubMenu("Model math", [{ "id": "modelMath", "label": "General" },
+        { "id": "parameter", "label": "Parameter" },
+        { "id": "qualityMeasures", "label": "Quality measures" },
+        { "id": "modelEquation", "label": "Model equation" }]);
+        // TODO: add model plot tab
+    }
+  }
+
+  class DoseResponseModel {
+
+    constructor() {
+      this.menus = this._createMenus();
+      // TODO: this.panels
+    }
+
+    _createMenus() {
+      return createSubMenu("General information", [
+        { "id": "generalInformation", "label": "General" },
+        { "id": "modelCategory", "label": "Model category" },
+        { "id": "author", "label": "Author" },
+        { "id": "creator", "label": "Creator" },
+        { "id": "reference", "label": "Reference" }]) +
+        createSubMenu("Scope", [{ "id": "scopeGeneral", "label": "General" },
+        { "id": "hazard", "label": "Hazard" },
+        { "id": "population", "label": "Population group" }]) +
+        createSubMenu("Data Background", [{ "id": "study", "label": "Study" },
+        { "id": "studySample", "label": "Study sample" },
+        { "id": "laboratory", "label": "Laboratory" },
+        { "id": "assay", "label": "Assay" }]) +
+        createSubMenu("Model math", [{ "id": "modelMath", "label": "General" },
+        { "id": "parameter", "label": "Parameter" },
+        { "id": "qualityMeasures", "label": "Quality measures" },
+        { "id": "modelEquation", "label": "Model equation" },
+        { "id": "exposure", "label": "Exposure" }]);
+        // TODO: add model plot tab
+    }
+  }
+
+  class ToxicologicalModel {
+
+    constructor() {
+      this.menus = this._createMenus();
+      // TODO: this.panels
+    }
+
+    _createMenus() {
+      return createSubMenu("General information", [
+        { "id": "generalInformation", "label": "General" },
+        { "id": "modelCategory", "label": "Model category" },
+        { "id": "author", "label": "Author" },
+        { "id": "creator", "label": "Creator" },
+        { "id": "reference", "label": "Reference" }]) +
+        createSubMenu("Scope", [{ "id": "scopeGeneral", "label": "General" },
+        { "id": "hazard", "label": "Hazard" },
+        { "id": "population", "label": "Population group" }]) +
+        createSubMenu("Data Background", [{ "id": "study", "label": "Study" },
+        { "id": "studySample", "label": "Study sample" },
+        { "id": "laboratory", "label": "Laboratory" },
+        { "id": "assay", "label": "Assay" }]) +
+        createSubMenu("Model math", [{ "id": "modelMath", "label": "General" },
+        { "id": "parameter", "label": "Parameter" },
+        { "id": "qualityMeasures", "label": "Quality measures" },
+        { "id": "modelEquation", "label": "Model equation" },
+        { "id": "exposure", "label": "Exposure" }]);
+        // TODO: add model plot tab
+    }
+  }
+
+  class ExposureModel {
+
+    constructor() {
+      this.menus = this._createMenus();
+      // TODO: this.panels
+    }
+
+    _createMenus() {
+      return createSubMenu("General information", [
+        { "id": "generalInformation", "label": "General" },
+        { "id": "modelCategory", "label": "Model category" },
+        { "id": "author", "label": "Author" },
+        { "id": "creator", "label": "Creator" },
+        { "id": "reference", "label": "Reference" }]) +
+        createSubMenu("Scope", [{ "id": "scopeGeneral", "label": "General" },
+        { "id": "product", "label": "Product" },
+        { "id": "hazard", "label": "Hazard" },
+        { "id": "population", "label": "Population group" }]) +
+        createSubMenu("Data Background", [{ "id": "study", "label": "Study" },
+        { "id": "studySample", "label": "Study sample" },
+        { "id": "dietaryAssessmentMethod", "label": "Dietary assessment method" },
+        { "id": "laboratory", "label": "Laboratory" },
+        { "id": "assay", "label": "Assay" }]) +
+        createSubMenu("Model math", [{ "id": "modelMath", "label": "General" },
+        { "id": "parameter", "label": "Parameter" },
+        { "id": "qualityMeasures", "label": "Quality measures" },
+        { "id": "modelEquation", "label": "Model equation" },
+        { "id": "exposure", "label": "Exposure" }]);
+        // TODO: add model plot tab
+    }
+  }
+
+  class ProcessModel {
+
+    constructor() {
+      this.menus = this._createMenus();
+      // TODO: this.panels
+    }
+
+    _createMenus() {
+      return createSubMenu("General information", [
+        { "id": "generalInformation", "label": "General" },
+        { "id": "author", "label": "Author" },
+        { "id": "creator", "label": "Creator" },
+        { "id": "reference", "label": "Reference" }]) +
+        createSubMenu("Scope", [{ "id": "scopeGeneral", "label": "General" },
+        { "id": "product", "label": "Product" },
+        { "id": "hazard", "label": "Hazard" }]) +
+        createSubMenu("Data Background", [{ "id": "study", "label": "Study" },
+        { "id": "studySample", "label": "Study sample" },
+        { "id": "laboratory", "label": "Laboratory" },
+        { "id": "assay", "label": "Assay" }]) +
+        createSubMenu("Model math", [{ "id": "parameter", "label": "Parameter" },
+        { "id": "qualityMeasures", "label": "Quality measures" },
+        { "id": "modelEquation", "label": "Model equation" }]);
+        // TODO: add model plot tab
+    }
+  }
+
+  class ConsumptionModel {
+
+    constructor() {
+      this.menus = this._createMenus();
+      // TODO: this.panels
+    }
+
+    _createMenus() {
+      return createSubMenu("General information", [
+        { "id": "generalInformation", "label": "General" },
+        { "id": "modelCategory", "label": "Model category" },
+        { "id": "author", "label": "Author" },
+        { "id": "creator", "label": "Creator" },
+        { "id": "reference", "label": "Reference" }]) +
+        createSubMenu("Scope", [{ "id": "scopeGeneral", "label": "General" },
+        { "id": "product", "label": "Product" },
+        { "id": "populationGroup", "label": "Population group" }]) +
+        createSubMenu("Data Background", [{ "id": "study", "label": "Study" },
+        { "id": "studySample", "label": "Study sample" },
+        { "id": "laboratory", "label": "Laboratory" },
+        { "id": "assay", "label": "Assay" }]) +
+        createSubMenu("Model math", [{ "id": "parameter", "label": "Parameter" },
+        { "id": "qualityMeasures", "label": "Quality measures" },
+        { "id": "modelEquation", "label": "Model equation" }]);
+        // TODO: add model plot tab
+    }
+  }
+
+  class HealthModel {
+
+    constructor() {
+      this.menus = this._createMenus();
+      // TODO: this.panels
+    }
+
+    _createMenus() {
+      return createSubMenu("General information", [
+        { "id": "generalInformation", "label": "General" },
+        { "id": "modelCategory", "label": "Model category" },
+        { "id": "author", "label": "Author" },
+        { "id": "creator", "label": "Creator" },
+        { "id": "reference", "label": "Reference" }]) +
+        createSubMenu("Scope", [{ "id": "scopeGeneral", "label": "General" },
+        { "id": "hazard", "label": "Hazard" },
+        { "id": "populationGroup", "label": "Population group" }]) +
+        createSubMenu("Data Background", [{ "id": "study", "label": "Study" },
+        { "id": "studySample", "label": "Study sample" },
+        { "id": "laboratory", "label": "Laboratory" },
+        { "id": "assay", "label": "Assay" }]) +
+        createSubMenu("Model math", [{ "id": "modelMath", "label": "General" },
+        { "id": "parameter", "label": "Parameter" },
+        { "id": "qualityMeasures", "label": "Quality measures" },
+        { "id": "modelEquation", "label": "Model equation" },
+        { "id": "exposure", "label": "Exposure" }]);
+      // TODO: add model plot tab
+    }
+  }
+
+  class RiskModel {
+
+    constructor() {
+      this.menus = this._createMenus();
+      // TODO: this.panels
+    }
+
+    _createMenus() {
+      return createSubMenu("General information", [
+        { "id": "generalInformation", "label": "General" },
+        { "id": "modelCategory", "label": "Model category" },
+        { "id": "author", "label": "Author" },
+        { "id": "creator", "label": "Creator" },
+        { "id": "reference", "label": "Reference" }]) +
+        createSubMenu("Scope", [{ "id": "scopeGeneral", "label": "General" },
+        { "id": "product", "label": "Product" },
+        { "id": "hazard", "label": "Hazard" },
+        { "id": "population", "label": "Population group" }]) +
+        createSubMenu("Data Background", [{ "id": "study", "label": "Study" },
+        { "id": "studySample", "label": "Study sample" },
+        { "id": "dietaryAssessmentMethod", "label": "Dietary assessment method" },
+        { "id": "laboratory", "label": "Laboratory" },
+        { "id": "assay", "label": "Assay" }]) +
+        createSubMenu("Model math", [{ "id": "modelMath", "label": "General" },
+        { "id": "parameter", "label": "Parameter" },
+        { "id": "qualityMeasures", "label": "Quality measures" },
+        { "id": "modelEquation", "label": "Model equation" },
+        { "id": "exposure", "label": "Exposure" }]);
+      // TODO: add model plot tab
+    }
+  }
+
+  class QraModel {
+
+    constructor() {
+      this.menus = this._createMenus();
+      // TODO: this.panels
+    }
+
+    _createMenus() {
+      return createSubMenu("General information", [
+        { "id": "generalInformation", "label": "General" },
+        { "id": "modelCategory", "label": "Model category" },
+        { "id": "author", "label": "Author" },
+        { "id": "creator", "label": "Creator" },
+        { "id": "reference", "label": "Reference" }]) +
+        createSubMenu("Scope", [{ "id": "scopeGeneral", "label": "General" },
+        { "id": "product", "label": "Product" },
+        { "id": "hazard", "label": "Hazard" },
+        { "id": "population", "label": "Population group" }]) +
+        createSubMenu("Data Background", [{ "id": "study", "label": "Study" },
+        { "id": "studySample", "label": "Study sample" },
+        { "id": "dietaryAssessmentMethod", "label": "Dietary assessment method" },
+        { "id": "laboratory", "label": "Laboratory" },
+        { "id": "assay", "label": "Assay" }]) +
+        createSubMenu("Model math", [{ "id": "modelMath", "label": "General" },
+        { "id": "parameter", "label": "Parameter" },
+        { "id": "qualityMeasures", "label": "Quality measures" },
+        { "id": "modelEquation", "label": "Model equation" },
+        { "id": "exposure", "label": "Exposure" }]);
+        // TODO: add model plot tab
+    }
+  }
+
     //transform jquery :contains selector to case insensitive
     jQuery.expr[':'].contains = function(a,i,m){
       return jQuery(a).text().toUpperCase().indexOf(m[3].toUpperCase())>=0;
@@ -75,6 +449,35 @@
       body.appendChild(mainTable);
 
       fillTable();
+
+      // details dialog
+      $("body").append(`<div class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal"
+                aria-label="Close"><span aria-hidden="true">&times;</span>
+              </button>
+              <h4 class="modal-title">Modal title</h4>
+            </div>
+            <div class="modal-body">
+              <nav class="navbar navbar-default">
+                <div class="navbar-collapse collapse">
+                  <ul class="nav navbar-nav" id="viewTab">
+
+                  </ul>
+                </div>
+              </nav>
+              <p>One fine body&hellip;</p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+          </div> <!-- .modal-content -->
+        </div> <!-- .modal-dialog -->
+      </div> <!-- .modal -->`);
+
 
       // Populate cache
       $(".table tbody tr").each(function() {
@@ -303,16 +706,16 @@
       // These sets are used with the th-filters
 
       // Load model information table from _representation
-      let modelInformation = new kt();
-      modelInformation.setDataTable(_representation.basicModelInformation);
+      window.modelInformation = new kt();
+      window.modelInformation.setDataTable(_representation.basicModelInformation);
 
       // Get full model metadata from _representation
       let metadata = JSON.parse(_representation.metadata);
 
-      for (let i=0; i < modelInformation.getNumRows(); i++) {
+      for (let i=0; i < window.modelInformation.getNumRows(); i++) {
 
         let modelMetadata = metadata[i][0];
-        let currentRow = modelInformation.getRows()[i];
+        let currentRow = window.modelInformation.getRows()[i];
         
         // TODO: ...
         let modelName = getData(modelMetadata, "generalInformation", "name");
@@ -353,8 +756,10 @@
         $("#opener"+i).click(function(event){//to open details window
           let processedEvent = event
           $.when(effect(event.target)).done(function() {
-            setTimeout(function(){ buildDialogWindow(processedEvent);
-            $('html, body').animate({scrollTop: 0}, 500);}, 50);
+            setTimeout(function() {
+              buildDialogWindow(processedEvent);
+              $('html, body').animate({scrollTop: 0}, 500);},
+              50);
           });
         });
       }
@@ -445,7 +850,7 @@
           });
           
           // save selected model
-          _value.selectedModel = modelInformation.getRows()[selectedBox].rowKey;
+          _value.selectedModel = window.modelInformation.getRows()[selectedBox].rowKey;
         });
       });
     }
@@ -709,5 +1114,51 @@
 
     function buildDialogWindow(event) {
       // TODO: buildDialogWindow
+
+      // button id has format "opener{i}" where i is the model number (6th char)
+      let buttonId = event.target.id;
+      let modelNumber = buttonId.substr(6);
+
+      let metadata = JSON.parse(_representation.metadata)[modelNumber][0];
+      let image = window.modelInformation.getRows()[modelNumber].data[0];
+
+      // Update .modal-title
+      if (metadata.generalInformation && metadata.generalInformation.name) {
+        $(".modal-title").text(metadata.generalInformation.name);
+      }
+
+      // Get appropiate metadata handler for the model type.
+      let handler;
+      if (_representation.metadata.modelType === "genericModel") {
+        handler = new GenericModel();
+      } else if (_representation.metadata.modelType === "dataModel") {
+        handler = new DataModel();
+      } else if (_representation.metadata.modelType === "predictiveModel") {
+        handler = new PredictiveModel();
+      } else if (_representation.metadata.modelType === "otherModel") {
+        handler = new OtherModel();
+      } else if (_representation.metadata.modelType === "toxicologicalModel") {
+        handler = new ToxicologicalModel();
+      } else if (_representation.metadata.modelType === "doseResponseModel") {
+        handler = new DoseResponseModel();
+      } else if (_representation.metadata.modelType === "exposureModel") {
+        handler = new ExposureModel();
+      } else if (_representation.metadata.modelType === "processModel") {
+        handler = new ProcessModel();
+      } else if (_representation.metadata.modelType === "consumptionModel") {
+        handler = new ConsumptionModel();
+      } else if (_representation.metadata.modelType === "healthModel") {
+        handler = new HealthModel();
+      } else if (_representation.metadata.modelType === "riskModel") {
+        handler = new RiskModel();
+      } else if (_representation.metadata.modelType === "qraModel") {
+        handler = new QraModel();
+      } else {
+        handler = new GenericModel();
+      }
+
+      document.getElementById("viewTab").innerHTML = handler.menus;
+
+      $(".modal").modal("show");
     }
 }());
