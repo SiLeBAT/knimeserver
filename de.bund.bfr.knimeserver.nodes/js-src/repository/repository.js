@@ -19,11 +19,86 @@
     </li>`;
   }
 
+  /**
+   * Create a Bootstrap 3 panel for simple (non-nested) metadata. Good for
+   * General information, study, etc. but not for lists like model parameters or
+   * references.
+   * 
+   * @param {string} title Panel title 
+   * @param {object} formData Information from UI schema for this metadata
+   * @param {object} data Object with keys as the properties ids in formData and
+   * values as the actual metadata values.
+   */
+  function createSimplePanel(title, formData, data) {
+
+    return `<div class="panel panel-default">
+      <div class="panel-heading">
+        <h3>${title}</h3>
+      </div>
+      <div class="panel-body">
+        <table class="table">
+          <thead>
+            <th>Property</th>
+            <th>Value</th>
+          </thead>
+          <tbody>
+          ${formData.map(prop => `<tr>
+            <td>${prop.label}</td>
+            <td>${data && data[prop.id] ? data[prop.id] : ""}</td>
+          </tr>`).join("")}
+          </tbody>
+        </table>
+      </div>
+    </div> <!-- .panel -->`;
+  }
+
+  /**
+   * Create a Bootstrap 3 panel for complex (nested) metadata. Good for lists
+   * like model parameters or references.
+   * 
+   * @param {string} title Panel title 
+   * @param {object} formData Information from UI schema for this metadata
+   * @param {object} data Object with keys as the properties ids in formData and
+   * values as the actual metadata values.
+   */
+  function createComplexPanel(title, formData, data) {
+
+    let rows = [];
+    if (data) {
+      data.forEach(item => {
+        let newRow = `<tr>
+          ${formData.map(prop => {
+            `<td>${item[prop.id] ? item[prop.id] : ""}</td>`
+          }).join("")}
+        </tr>`;
+        rows.push(newRow);
+      });
+    }
+
+    return `<div class="panel panel-default">
+      <div class="panel-heading">
+        <h3>${title}</h3>
+      </div>
+      <div class="panel-body">
+        <table class="table">
+          <thead>
+            ${formData.map(prop => `<th>${prop.label}</th>`).join("")}
+          </thead>
+          <tbody>${rows.join("")}</tbody>
+        </table>
+      </div>
+    </div> <!-- .panel -->`;
+  }
+
+  function createPlotPanel(img) {
+    return `<img  style='width:100%' src='data:image/png;base64,${img}'/>`;
+  }
+
   class GenericModel {
 
-    constructor() {
+    constructor(metadata, img) {
       this.menus = this._createMenus();
-      // this.panels
+      this.panels = this._createPanels(metadata, img);
     }
 
     _createMenus() {
@@ -46,8 +121,37 @@
         { "id": "parameter", "label": "Parameter" },
         { "id": "qualityMeasures", "label": "Quality measures" },
         { "id": "modelEquation", "label": "Model equation" },
-        { "id": "exposure", "label": "Exposure" }]);
-        // TODO: add model plot tab
+        { "id": "exposure", "label": "Exposure" }]) +
+        `<li role="presentation">
+          <a id="plot-tab" href="#plot"
+            aria-controls="plot" role="tab" data-toggle="tab">Model Plot</a>
+        </li>`;
+    }
+
+    _createPanels(metadata, img) {
+      let schema = schemas.genericModel;
+      return {
+        generalInformation: createSimplePanel("General information", schema.generalInformation, metadata.generalInformation),
+        modelCategory: createSimplePanel("Model category", schema.modelCategory, metadata.modelCategory),
+        author: createComplexPanel("Author", schema.contact, metadata.author),
+        creator: createComplexPanel("Creator", schema.contact, metadata.creator),
+        reference: createComplexPanel("Reference", schema.reference, metadata.reference),
+        scopeGeneral: createSimplePanel("General", schema.scope, metadata.scope),
+        product: createComplexPanel("Product", schema.product, metadata.product),
+        hazard: createComplexPanel("Hazard", schema.hazard, metadata.hazard),
+        population: createComplexPanel("Population", schema.populationGroup, metadata.populationGroup),
+        study: createSimplePanel("Study", schema.study, metadata.study),
+        studySample: createComplexPanel("Study sample", schema.studySample, metadata.studySample),
+        dietaryAssessmentMethod: createComplexPanel("Dietary assessment method", schema.dietaryAssessmentMethod, metadata.dietaryAssessmentMethod),
+        laboratory: createComplexPanel("Laboratory", schema.laboratory, metadata.laboratory),
+        assay: createComplexPanel("Assay", schema.assay, metadata.assay),
+        modelMath: createSimplePanel("Model math", schema.modelMath, metadata.modelMath),
+        parameter: createComplexPanel("Parameter", schema.parameter, metadata.modelMath.parameter),
+        qualityMeasures: createComplexPanel("Quality measures", schema.qualityMeasures, metadata.modelMath.qualityMeasures),
+        modelEquation: createComplexPanel("Model equation", schema.modelEquation, metadata.modelMath.modelEquation),
+        exposure: createComplexPanel("Exposure", schema.exposure, metadata.modelMath.exposure),
+        plot: createPlotPanel(img) 
+      };
     }
   }
 
@@ -409,12 +513,15 @@
 
       let body = document.getElementsByTagName("body")[0];
 
+      let container = document.createElement("div");
+      container.className = "container-fluid";
+
       let navBar = createNavBar();
-      body.appendChild(navBar);
+      container.appendChild(navBar);
 
       let descriptionParagraph = document.createElement("p");
       // TODO: add contents to description paragraph
-      body.appendChild(descriptionParagraph);
+      container.appendChild(descriptionParagraph);
 
       let mainTable = document.createElement("div");
       mainTable.id = "MainTable";
@@ -446,13 +553,16 @@
       </thead>
       <tbody id="rows"></tbody>
       </table></div>`;
-      body.appendChild(mainTable);
-
-      fillTable();
+      container.appendChild(mainTable);
 
       // details dialog
-      $("body").append(`<div class="modal fade" tabindex="-1" role="dialog">
-        <div class="modal-dialog modal-dialog-centered" role="document">
+      let modalDiv = document.createElement("div");
+      modalDiv.classList.add("modal", "fade");
+      modalDiv.setAttribute("tabindex", "-1");
+      modalDiv.setAttribute("role", "dialog");
+
+      modalDiv.innerHTML = `
+        <div class="modal-dialog modal-lg" role="document">
           <div class="modal-content">
             <div class="modal-header">
               <button type="button" class="close" data-dismiss="modal"
@@ -463,21 +573,23 @@
             <div class="modal-body">
               <nav class="navbar navbar-default">
                 <div class="navbar-collapse collapse">
-                  <ul class="nav navbar-nav" id="viewTab">
-
-                  </ul>
+                  <ul class="nav navbar-nav" id="viewTab"></ul>
                 </div>
               </nav>
-              <p>One fine body&hellip;</p>
+              <div class="tab-content" id="viewContent">
+              </div>
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
               <button type="button" class="btn btn-primary">Save changes</button>
             </div>
           </div> <!-- .modal-content -->
-        </div> <!-- .modal-dialog -->
-      </div> <!-- .modal -->`);
+        </div> <!-- .modal-dialog -->`;
+      container.appendChild(modalDiv);
 
+      body.appendChild(container);
+
+      fillTable();
 
       // Populate cache
       $(".table tbody tr").each(function() {
@@ -1130,7 +1242,7 @@
       // Get appropiate metadata handler for the model type.
       let handler;
       if (_representation.metadata.modelType === "genericModel") {
-        handler = new GenericModel();
+        handler = new GenericModel(metadata, image);
       } else if (_representation.metadata.modelType === "dataModel") {
         handler = new DataModel();
       } else if (_representation.metadata.modelType === "predictiveModel") {
@@ -1154,10 +1266,30 @@
       } else if (_representation.metadata.modelType === "qraModel") {
         handler = new QraModel();
       } else {
-        handler = new GenericModel();
+        handler = new GenericModel(metadata, image);
       }
 
       document.getElementById("viewTab").innerHTML = handler.menus;
+
+      // Add tab panels
+      let viewContent = document.getElementById("viewContent");
+      viewContent.innerHTML = ""; // First remove old tabs
+
+      // Add new tabs from handler
+      Object.entries(handler.panels).forEach(([key, value]) => {
+
+        // Create a tab from the panel (value)
+        let tabPanel = document.createElement("div");
+        tabPanel.setAttribute("role", "tabpanel");
+        tabPanel.className = "tab-pane";
+        tabPanel.id = key;
+        tabPanel.innerHTML = value;
+
+        viewContent.appendChild(tabPanel); // Add new tabPanel
+      });
+
+      // Set the first tab (general information) as active
+      document.getElementById("generalInformation").classList.add("active");
 
       $(".modal").modal("show");
     }

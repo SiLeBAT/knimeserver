@@ -43,6 +43,10 @@
                relativePathTarget="repository/">
          </webResource>
          <importResource
+         	relativePath="repository/editor_data.js"
+         	type="JAVASCRIPT">
+         </importResource>
+         <importResource
                relativePath="repository/repository.js"
                type="JAVASCRIPT">
          </importResource>
@@ -61,15 +65,5 @@
          </webDependency>
       </webResourceBundle>
    </extension>
-   <!--
-   <extension
-         point="org.knime.dynamic.node.generation.dynamicNodes">
-      <dynamicNodeFolder
-            function="js"
-            name="BfR Server nodes"
-            path="nodes/">
-      </dynamicNodeFolder>
-   </extension>
-	-->
 	
 </plugin>

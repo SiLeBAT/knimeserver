@@ -192,7 +192,7 @@ select {
     table-layout: fixed;
 }
 
-table {
+#MainTable table {
     box-sizing: border-box;
     -webkit-box-shadow: 0 0px 20px 0px rgba(0, 0, 0, 0.15);
 }
@@ -247,7 +247,7 @@ table {
     display: none;
 }
 
-tr:hover {
+#MainTable tr:hover {
     background-color: #e1e3e8;
 }
 
@@ -296,30 +296,11 @@ th.actives.descending:after {
     webkit-box-shadow: 0 0px 40px 0px rgba(0, 0, 0, 0.15);
 }
 
-.nav.nav-tabs li a,
-.nav.nav-tabs li.active>a:hover,
-.nav.nav-tabs li.active>a:active,
-.nav.nav-tabs li.active>a:focus {
-    border-bottom-width: 0px;
-    outline: none;
-    transition: all .3s cubic-bezier(0.445, 0.05, 0.55, 0.95);
+.modal-body {
+    overflow-x: auto;
 }
-
-.nav.nav-tabs li a {
-    padding-top: 20px;
-    padding-bottom: 20px;
-}
-
-.tab-pane {
-    background: #fff;
-    padding: 10px;
-    border: 1px solid #ddd;
-    margin-top: -1px;
-}
-
 
 /* used for sidebar tab/collapse*/
-
 @media (min-width: 768px) {
     .visible-tabs {
         display: none;
