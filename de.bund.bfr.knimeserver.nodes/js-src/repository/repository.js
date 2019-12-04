@@ -185,7 +185,7 @@
     }
 
     _createPanels(metadata, img) {
-      let schema = schemas.genericModel;
+      let schema = schemas.dataModel;
       return {
         generalInformation: createSimplePanel("General information", schema.generalInformation, metadata.generalInformation),
         author: createComplexPanel("Author", schema.contact, metadata.author),
@@ -234,7 +234,7 @@
     }
 
     _createPanels(metadata, img) {
-      let schema = schemas.genericModel;
+      let schema = schemas.predictiveModel;
       return {
         generalInformation: createSimplePanel("General information", schema.generalInformation, metadata.generalInformation),
         author: createComplexPanel("Author", schema.contact, metadata.author),
@@ -287,7 +287,7 @@
     }
 
     _createPanels(metadata, img) {
-      let schema = schemas.genericModel;
+      let schema = schemas.otherModel;
       return {
         generalInformation: createSimplePanel("General information", schema.generalInformation, metadata.generalInformation),
         modelCategory: createSimplePanel("Model category", schema.modelCategory, metadata.modelCategory),
@@ -344,7 +344,7 @@
     }
 
     _createPanels(metadata, img) {
-      let schema = schemas.genericModel;
+      let schema = schemas.doseResponseModel;
       return {
         generalInformation: createSimplePanel("General information", schema.generalInformation, metadata.generalInformation),
         modelCategory: createSimplePanel("Model category", schema.modelCategory, metadata.modelCategory),
