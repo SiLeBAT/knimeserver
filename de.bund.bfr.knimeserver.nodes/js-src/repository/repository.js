@@ -208,9 +208,9 @@
 
   class PredictiveModel {
 
-    constructor() {
+    constructor(metadata, img) {
       this.menus = this._createMenus();
-      // TODO: this.panels
+      this.panels = this._createPanels(metadata, img);
     }
 
     _createMenus() {
@@ -226,8 +226,31 @@
         { "id": "studySample", "label": "Study sample" },
         { "id": "laboratory", "label": "Laboratory" },
         { "id": "assay", "label": "Assay" }]) +
-        createSubMenu("Model math", [{ "id": "parameter", "label": "Parameter" }]);
-        // TODO: add model plot tab
+        createSubMenu("Model math", [{ "id": "parameter", "label": "Parameter" }]) +
+        `<li role="presentation">
+          <a id="plot-tab" href="#plot"
+            aria-controls="plot" role="tab" data-toggle="tab">Model Plot</a>
+        </li>`;
+    }
+
+    _createPanels(metadata, img) {
+      let schema = schemas.genericModel;
+      return {
+        generalInformation: createSimplePanel("General information", schema.generalInformation, metadata.generalInformation),
+        author: createComplexPanel("Author", schema.contact, metadata.author),
+        creator: createComplexPanel("Creator", schema.contact, metadata.creator),
+        reference: createComplexPanel("Reference", schema.reference, metadata.reference),
+        scopeGeneral: createSimplePanel("General", schema.scope, metadata.scope),
+        product: createComplexPanel("Product", schema.product, metadata.product),
+        hazard: createComplexPanel("Hazard", schema.hazard, metadata.hazard),
+        study: createSimplePanel("Study", schema.study, metadata.study),
+        studySample: createComplexPanel("Study sample", schema.studySample, metadata.studySample),
+        laboratory: createComplexPanel("Laboratory", schema.laboratory, metadata.laboratory),
+        assay: createComplexPanel("Assay", schema.assay, metadata.assay),
+        modelMath: createSimplePanel("Model math", schema.modelMath, metadata.modelMath),
+        parameter: createComplexPanel("Parameter", schema.parameter, metadata.modelMath.parameter),
+        plot: createPlotPanel(img) 
+      };
     }
   }
 
@@ -1249,7 +1272,6 @@
     }
 
     function buildDialogWindow(event) {
-      // TODO: buildDialogWindow
 
       // button id has format "opener{i}" where i is the model number (6th char)
       let buttonId = event.target.id;
@@ -1270,7 +1292,7 @@
       } else if (_representation.metadata.modelType === "dataModel") {
         handler = new DataModel(metadata, image);
       } else if (_representation.metadata.modelType === "predictiveModel") {
-        handler = new PredictiveModel();
+        handler = new PredictiveModel(metadata, image);
       } else if (_representation.metadata.modelType === "otherModel") {
         handler = new OtherModel();
       } else if (_representation.metadata.modelType === "toxicologicalModel") {
