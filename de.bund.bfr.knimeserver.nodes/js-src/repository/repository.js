@@ -1149,8 +1149,7 @@
           <td>${uploadTime}</td>
           <td>
             <button type="button" class="btn btn-primary detailsButton"
-            data-loading-text='<i class="fa fa-spinner fa-spin"></i> Processing...'
-            id="opener${i}">Details</button>
+              id="opener${i}">Details</button>
             <br>
             <br>
             <a class="btn btn-primary downloadButton" href="${downloadUrl}">Download</a>
@@ -1158,15 +1157,7 @@
           </td>
         </tr>`);
 
-        $("#opener"+i).click(function(event){//to open details window
-          let processedEvent = event
-          $.when(effect(event.target)).done(function() {
-            setTimeout(function() {
-              buildDialogWindow(processedEvent);
-              $('html, body').animate({scrollTop: 0}, 500);},
-              50);
-          });
-        });
+        $("#opener" + i).click((event) => buildDialogWindow(event));
       }
 
       populateSelectById("soft", _softwareSet);
