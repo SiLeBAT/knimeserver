@@ -91,7 +91,7 @@
   }
 
   function createPlotPanel(img) {
-    return `<img  style='width:100%' src='data:image/png;base64,${img}'/>`;
+    return `<img  style='width:100%' src='data:image/svg+xml;utf8,${img}'/>`;
   }
 
   class GenericModel {
