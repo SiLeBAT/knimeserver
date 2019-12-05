@@ -1011,7 +1011,7 @@
     }
 
     function createTopnav() {
-        let title1 = "FSK-Web"; // TODO: get title1 from input
+        let title1 = _representation.title1; // TODO: get title1 from input
 
         let topnav = document.createElement("div");
         topnav.className = "topnav";
@@ -1132,8 +1132,8 @@
         let hazard = currentRow.data[6];
         let durationTime = convertKnimeTimeToISO(currentRow.data[1]);
         let uploadTime = currentRow.data[7];
-        let downloadUrl = currentRow.data[8];
-
+        let downloadButtonHtml = (currentRow.data.length > 8) ? `<a class="btn btn-primary downloadButton" href="${currentRow.data[8]}">Download</a>` : "";
+        
         // Update sets
         if (software) _softwareSet.add(software);
         addUniformElements(environment.split(/[,|]/), _environmentSet);
@@ -1154,7 +1154,7 @@
               id="opener${i}">Details</button>
             <br>
             <br>
-            <a class="btn btn-primary downloadButton" href="${downloadUrl}">Download</a>
+            ${downloadButtonHtml}
             <div id="wrapper${i}">
           </td>
         </tr>`);
