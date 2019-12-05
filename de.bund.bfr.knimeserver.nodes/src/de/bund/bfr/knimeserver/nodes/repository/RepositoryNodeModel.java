@@ -21,16 +21,12 @@ public class RepositoryNodeModel extends AbstractWizardNodeModel<RepositoryViewR
 		implements BufferedDataTableHolder {
 
 	// input and output port types
-	private static final PortType[] IN_TYPES = { BufferedDataTable.TYPE, BufferedDataTable.TYPE,
-			FlowVariablePortObject.TYPE };
+	private static final PortType[] IN_TYPES = { BufferedDataTable.TYPE, FlowVariablePortObject.TYPE };
 	private static final PortType[] OUT_TYPES = { FlowVariablePortObject.TYPE };
-	
-    private static final NodeLogger LOGGER = NodeLogger.getLogger(RepositoryNodeModel.class);
+
+	private static final NodeLogger LOGGER = NodeLogger.getLogger(RepositoryNodeModel.class);
 
 	// internal tables
-	private BufferedDataTable m_linkTable;
-	private JSONDataTable m_linkJsonTable;
-
 	private BufferedDataTable m_modelInformationTable;
 	private JSONDataTable m_modelInformationJsonTable;
 
@@ -85,13 +81,12 @@ public class RepositoryNodeModel extends AbstractWizardNodeModel<RepositoryViewR
 
 			RepositoryViewRepresentation repr = getViewRepresentation();
 
-			// If the tables in repr are not set, create them from input tables and assign them
-			if (repr.links == null || repr.basicModelInformation == null) {
-				m_linkTable = (BufferedDataTable) inObjects[0];
-				m_modelInformationTable = (BufferedDataTable) inObjects[1];
+			// If the tables in repr are not set, create them from input tables and assign
+			// them
+			if (repr.basicModelInformation == null) {
+				m_modelInformationTable = (BufferedDataTable) inObjects[0];
 				createJsonTables(exec);
 
-				repr.links = m_linkJsonTable;
 				repr.basicModelInformation = m_modelInformationJsonTable;
 			}
 
@@ -105,43 +100,52 @@ public class RepositoryNodeModel extends AbstractWizardNodeModel<RepositoryViewR
 
 	private void createJsonTables(final ExecutionContext exec)
 			throws IllegalArgumentException, CanceledExecutionException {
-		m_linkJsonTable = JSONDataTable.newBuilder().setDataTable(m_linkTable).build(exec);
 		m_modelInformationJsonTable = JSONDataTable.newBuilder().setDataTable(m_modelInformationTable).build(exec);
 	}
-	
+
 	@Override
 	public RepositoryViewRepresentation getViewRepresentation() {
 		RepositoryViewRepresentation repr = super.getViewRepresentation();
-		
+
 		synchronized (getLock()) {
 			// set internal tables
-			if ((m_linkTable != null && m_linkJsonTable == null) ||
-					(m_modelInformationTable != null && m_modelInformationJsonTable == null)) {
+			if (m_modelInformationTable != null && m_modelInformationJsonTable == null) {
 				try {
 					createJsonTables(null);
-					repr.links = m_linkJsonTable;
 					repr.basicModelInformation = m_modelInformationJsonTable;
 				} catch (IllegalArgumentException | CanceledExecutionException e) {
 					LOGGER.error("Could not create JSON table: " + e.getMessage(), e);
 				}
 			}
-			
+
 			repr.mainColor = peekFlowVariableString("Color-Main");
 			repr.buttonColor = peekFlowVariableString("Color-Button");
 			repr.hoverColor = peekFlowVariableString("Color Hover");
 			repr.title1 = peekFlowVariableString("Titel1");
 			repr.title2 = peekFlowVariableString("Titel2");
 			repr.metadata = peekFlowVariableString("Metadata");
+			
+			repr.link1 = peekFlowVariableString("Link1");
+			repr.link2 = peekFlowVariableString("Link2");
+			repr.link3 = peekFlowVariableString("Link3");
+			repr.link4 = peekFlowVariableString("Link4");
+			repr.link5 = peekFlowVariableString("Link5");
+			repr.link6 = peekFlowVariableString("Link6");
+			
+			repr.linkName1 = peekFlowVariableString("LinkName1");
+			repr.linkName2 = peekFlowVariableString("LinkName2");
+			repr.linkName3 = peekFlowVariableString("LinkName3");
+			repr.linkName4 = peekFlowVariableString("LinkName4");
+			repr.linkName5 = peekFlowVariableString("LinkName5");
+			repr.linkName6 = peekFlowVariableString("LinkName6");
 		}
-		
+
 		return repr;
 	}
 
 	@Override
 	protected void performReset() {
 		// Reset internal tables
-		m_linkTable = null;
-		m_linkJsonTable = null;
 		m_modelInformationTable = null;
 		m_modelInformationJsonTable = null;
 	}
@@ -164,12 +168,11 @@ public class RepositoryNodeModel extends AbstractWizardNodeModel<RepositoryViewR
 
 	@Override
 	public BufferedDataTable[] getInternalTables() {
-		return new BufferedDataTable[] { m_linkTable, m_modelInformationTable };
+		return new BufferedDataTable[] { m_modelInformationTable };
 	}
 
 	@Override
 	public void setInternalTables(BufferedDataTable[] tables) {
-		m_linkTable = tables[0];
 		m_modelInformationTable = tables[1];
 	}
 }
