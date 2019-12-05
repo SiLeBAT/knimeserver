@@ -66,11 +66,13 @@
     let rows = [];
     if (data) {
       data.forEach(item => {
-        let newRow = `<tr>
-          ${formData.map(prop => {
-            `<td>${item[prop.id] ? item[prop.id] : ""}</td>`
-          }).join("")}
-        </tr>`;
+        let cells = [];
+        formData.forEach(prop => {
+          let value = item[prop.id] ? item[prop.id] : "";
+          cells.push(`<td>${value}</td>`);
+        });
+
+        let newRow = `<tr>${cells.join("")}</tr>`;
         rows.push(newRow);
       });
     }
@@ -132,19 +134,19 @@
       let schema = schemas.genericModel;
       return {
         generalInformation: createSimplePanel("General information", schema.generalInformation, metadata.generalInformation),
-        modelCategory: createSimplePanel("Model category", schema.modelCategory, metadata.modelCategory),
-        author: createComplexPanel("Author", schema.contact, metadata.author),
-        creator: createComplexPanel("Creator", schema.contact, metadata.creator),
-        reference: createComplexPanel("Reference", schema.reference, metadata.reference),
+        modelCategory: createSimplePanel("Model category", schema.modelCategory, metadata.generalInformation.modelCategory),
+        author: createComplexPanel("Author", schema.contact, metadata.generalInformation.author),
+        creator: createComplexPanel("Creator", schema.contact, metadata.generalInformation.creator),
+        reference: createComplexPanel("Reference", schema.reference, metadata.generalInformation.reference),
         scopeGeneral: createSimplePanel("General", schema.scope, metadata.scope),
-        product: createComplexPanel("Product", schema.product, metadata.product),
-        hazard: createComplexPanel("Hazard", schema.hazard, metadata.hazard),
-        population: createComplexPanel("Population", schema.populationGroup, metadata.populationGroup),
-        study: createSimplePanel("Study", schema.study, metadata.study),
-        studySample: createComplexPanel("Study sample", schema.studySample, metadata.studySample),
-        dietaryAssessmentMethod: createComplexPanel("Dietary assessment method", schema.dietaryAssessmentMethod, metadata.dietaryAssessmentMethod),
-        laboratory: createComplexPanel("Laboratory", schema.laboratory, metadata.laboratory),
-        assay: createComplexPanel("Assay", schema.assay, metadata.assay),
+        product: createComplexPanel("Product", schema.product, metadata.scope.product),
+        hazard: createComplexPanel("Hazard", schema.hazard, metadata.scope.hazard),
+        population: createComplexPanel("Population", schema.populationGroup, metadata.scope.populationGroup),
+        study: createSimplePanel("Study", schema.study, metadata.dataBackground.study),
+        studySample: createComplexPanel("Study sample", schema.studySample, metadata.dataBackground.studySample),
+        dietaryAssessmentMethod: createComplexPanel("Dietary assessment method", schema.dietaryAssessmentMethod, metadata.dataBackground.dietaryAssessmentMethod),
+        laboratory: createComplexPanel("Laboratory", schema.laboratory, metadata.dataBackground.laboratory),
+        assay: createComplexPanel("Assay", schema.assay, metadata.dataBackground.assay),
         modelMath: createSimplePanel("Model math", schema.modelMath, metadata.modelMath),
         parameter: createComplexPanel("Parameter", schema.parameter, metadata.modelMath.parameter),
         qualityMeasures: createComplexPanel("Quality measures", schema.qualityMeasures, metadata.modelMath.qualityMeasures),
