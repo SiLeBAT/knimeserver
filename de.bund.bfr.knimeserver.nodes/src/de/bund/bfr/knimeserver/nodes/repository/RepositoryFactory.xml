@@ -14,8 +14,7 @@
 	<interactiveView name="Web repository"></interactiveView>
 
 	<ports>
-		<inPort name="Links" index="0">Links</inPort>
-		<inPort name="Model information" index="1">Basic model information</inPort>
+		<inPort name="Model information" index="0">Basic model information</inPort>
 		<outPort name="Selected model" index="0">Selected model (RowID)</outPort>
 	</ports>
 </knimeNode>

@@ -22,13 +22,14 @@ public class RepositoryViewRepresentation extends JSONViewContent {
 	String title1;
 	String title2;
 	String metadata;
-	
+
 	String linkName1;
 	String linkName2;
 	String linkName3;
 	String linkName4;
 	String linkName5;
 	String linkName6;
+
 	String link1;
 	String link2;
 	String link3;
@@ -59,23 +60,18 @@ public class RepositoryViewRepresentation extends JSONViewContent {
 		final RepositoryViewRepresentation other = (RepositoryViewRepresentation) obj;
 		return links.equals(other.links) && mainColor.equals(other.mainColor) && buttonColor.equals(other.buttonColor)
 				&& hoverColor.equals(other.hoverColor) && title1.equals(other.title1) && title2.equals(title2)
-				&& basicModelInformation.equals(other.basicModelInformation) && metadata.equals(other.metadata)&& linkName1.equals(other.linkName1)
-				&& linkName2.equals(other.linkName2)
-				&& linkName3.equals(other.linkName3)
-				&& linkName4.equals(other.linkName4)
-				&& linkName5.equals(other.linkName5)
-				&& linkName6.equals(other.linkName6)
-				&& link1.equals(other.link1)
-				&& link2.equals(other.link2)
-				&& link3.equals(other.link3)
-				&& link4.equals(other.link4)
-				&& link5.equals(other.link5)
-				&& link6.equals(other.link6);
+				&& basicModelInformation.equals(other.basicModelInformation) && metadata.equals(other.metadata)
+				&& linkName1.equals(other.linkName1) && linkName2.equals(other.linkName2)
+				&& linkName3.equals(other.linkName3) && linkName4.equals(other.linkName4)
+				&& linkName5.equals(other.linkName5) && linkName6.equals(other.linkName6) && link1.equals(other.link1)
+				&& link2.equals(other.link2) && link3.equals(other.link3) && link4.equals(other.link4)
+				&& link5.equals(other.link5) && link6.equals(other.link6);
 	}
 
 	@Override
 	public int hashCode() {
 		return Objects.hash(links, mainColor, buttonColor, hoverColor, title1, title2, basicModelInformation,
-				basicModelInformation, metadata, link1, link2, link3, link4, link5, link6, linkName1, linkName2, linkName3, linkName4, linkName5, linkName6);
+				basicModelInformation, metadata, link1, link2, link3, link4, link5, link6, linkName1, linkName2,
+				linkName3, linkName4, linkName5, linkName6);
 	}
 }
