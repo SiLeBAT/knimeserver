@@ -1132,8 +1132,8 @@
         let hazard = currentRow.data[6];
         let durationTime = convertKnimeTimeToISO(currentRow.data[1]);
         let uploadTime = currentRow.data[7];
-        let downloadButtonHtml = (currentRow.data.length > 8) ? `<a class="btn btn-primary downloadButton" href="${currentRow.data[8]}">Download</a>` : "";
-        
+        let url = currentRow.data[8];
+
         // Update sets
         if (software) _softwareSet.add(software);
         addUniformElements(environment.split(/[,|]/), _environmentSet);
@@ -1154,7 +1154,7 @@
               id="opener${i}">Details</button>
             <br>
             <br>
-            ${downloadButtonHtml}
+            ${url ? `<a class="btn btn-primary downloadButton" href="${url}">Download</a>` : ""}
             <div id="wrapper${i}">
           </td>
         </tr>`);
