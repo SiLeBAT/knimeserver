@@ -1221,7 +1221,7 @@
           filterByCol();
         });
 
-        // TODO: Sort columns
+        // Sort columns
         $("#col1").click(() => sortColumn("#col1", 1));
         $("#col2").click(() => sortColumn("#col2", 2));
         $("#col3").click(() => sortColumn("#col3", 3));
@@ -1286,15 +1286,6 @@
     }
 
     /**
-     * Create the options for a filter.
-     */
-    function createSelect(list, idName){
-      for(var s = 0; s < list.length; s++) {
-        $(idName).append('<option value="'+list[s]+'">'+ list[s]+'</option>');
-      };
-    }
-
-    /**
      * Populate the options of a select.
      * 
      * @param {string} selectId Id of a select
@@ -1309,7 +1300,7 @@
     /**
      * Populate the options of a select.
      * 
-     * @param {element} selectId select element
+     * @param {element} select DOM element
      * @param {array} options Array of possible values
      */
     function populateSelect(select, options) {
