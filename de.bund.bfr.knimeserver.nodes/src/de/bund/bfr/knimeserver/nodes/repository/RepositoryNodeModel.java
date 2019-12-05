@@ -132,6 +132,18 @@ public class RepositoryNodeModel extends AbstractWizardNodeModel<RepositoryViewR
 			repr.title1 = peekFlowVariableString("Titel1");
 			repr.title2 = peekFlowVariableString("Titel2");
 			repr.metadata = peekFlowVariableString("Metadata");
+			repr.link1 = peekFlowVariableString("Link1");
+			repr.link2 = peekFlowVariableString("Link2");
+			repr.link3 = peekFlowVariableString("Link3");
+			repr.link4 = peekFlowVariableString("Link4");
+			repr.link5 = peekFlowVariableString("Link5");
+			repr.link6 = peekFlowVariableString("Link6");
+			repr.linkName1 = peekFlowVariableString("LinkName1");
+			repr.linkName2 = peekFlowVariableString("LinkName2");
+			repr.linkName3 = peekFlowVariableString("LinkName3");
+			repr.linkName4 = peekFlowVariableString("LinkName4");
+			repr.linkName5 = peekFlowVariableString("LinkName5");
+			repr.linkName6 = peekFlowVariableString("LinkName6");
 		}
 		
 		return repr;
