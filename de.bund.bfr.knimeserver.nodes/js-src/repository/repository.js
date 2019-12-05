@@ -68,8 +68,10 @@
       data.forEach(item => {
         let cells = [];
         formData.forEach(prop => {
+          // Short long text to only 25 chars and keep the whole text in title
           let value = item[prop.id] ? item[prop.id] : "";
-          cells.push(`<td>${value}</td>`);
+          let textContent = value.length > 20 ? value.substring(0, 24) + "..." : value;
+          cells.push(`<td title="${value}">${textContent}</td>`);
         });
 
         let newRow = `<tr>${cells.join("")}</tr>`;
