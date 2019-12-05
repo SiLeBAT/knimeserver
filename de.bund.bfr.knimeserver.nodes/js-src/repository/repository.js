@@ -81,7 +81,7 @@
       <div class="panel-heading">
         <h3>${title}</h3>
       </div>
-      <div class="panel-body">
+      <div class="table-responsive">
         <table class="table">
           <thead>
             ${formData.map(prop => `<th>${prop.label}</th>`).join("")}
