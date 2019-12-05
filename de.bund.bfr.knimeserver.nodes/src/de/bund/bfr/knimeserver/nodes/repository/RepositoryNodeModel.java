@@ -93,7 +93,7 @@ public class RepositoryNodeModel extends AbstractWizardNodeModel<RepositoryViewR
 			selectedModel = getViewValue().selectedModel;
 		}
 
-		pushFlowVariableString("selectedModel", selectedModel);
+		pushFlowVariableString("selectedmodel", selectedModel);
 
 		return new PortObject[] { FlowVariablePortObject.INSTANCE };
 	}
