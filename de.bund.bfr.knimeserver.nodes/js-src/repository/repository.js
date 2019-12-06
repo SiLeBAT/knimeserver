@@ -1030,12 +1030,12 @@
         menuLink.id = "MenuIcon";
         menuLink.innerHTML = '<i style="font-size:26px;" class="material-icons">menu</i></a>';
         topnav.appendChild(menuLink);
-        topnav.appendChild(createStupidLink(_representation.link1, _representation.linkName1));
-        topnav.appendChild(createStupidLink(_representation.link2, _representation.linkName2));
-        topnav.appendChild(createStupidLink(_representation.link3, _representation.linkName3));
-        topnav.appendChild(createStupidLink(_representation.link4, _representation.linkName4));
-        topnav.appendChild(createStupidLink(_representation.link5, _representation.linkName5));
-        topnav.appendChild(createStupidLink(_representation.link6, _representation.linkName6));
+        topnav.appendChild(createHardCodedLink(_representation.link1, _representation.linkName1));
+        topnav.appendChild(createHardCodedLink(_representation.link2, _representation.linkName2));
+        topnav.appendChild(createHardCodedLink(_representation.link3, _representation.linkName3));
+        topnav.appendChild(createHardCodedLink(_representation.link4, _representation.linkName4));
+        topnav.appendChild(createHardCodedLink(_representation.link5, _representation.linkName5));
+        topnav.appendChild(createHardCodedLink(_representation.link6, _representation.linkName6));
         return topnav;
     }
 
@@ -1048,30 +1048,32 @@
         sidenav.innerHTML = '<a href="javascript:void(0)" class="closebtn">&times;</a>'
 
         // Add links
-        sidenav.appendChild(createStupidLink(_representation.link1, _representation.linkName1));
-        sidenav.appendChild(createStupidLink(_representation.link2, _representation.linkName2));
-        sidenav.appendChild(createStupidLink(_representation.link3, _representation.linkName3));
-        sidenav.appendChild(createStupidLink(_representation.link4, _representation.linkName4));
-        sidenav.appendChild(createStupidLink(_representation.link5, _representation.linkName5));
-        sidenav.appendChild(createStupidLink(_representation.link6, _representation.linkName6));
+        sidenav.appendChild(createHardCodedLink(_representation.link1, _representation.linkName1));
+        sidenav.appendChild(createHardCodedLink(_representation.link2, _representation.linkName2));
+        sidenav.appendChild(createHardCodedLink(_representation.link3, _representation.linkName3));
+        sidenav.appendChild(createHardCodedLink(_representation.link4, _representation.linkName4));
+        sidenav.appendChild(createHardCodedLink(_representation.link5, _representation.linkName5));
+        sidenav.appendChild(createHardCodedLink(_representation.link6, _representation.linkName6));
 
         return sidenav;
     }
 
-    function createStupidLink(url, text) {
+    function createHardCodedLink(url, text) {
       let navlink = document.createElement("a");
       navlink.className = "Nav";
       navlink.href = url; // url column
       navlink.target = "_blank";
       navlink.innerText = text; // text column
 
+      //add icon to links (pencil for link to other fsk-web servie, cloud for publishing ot outside services like Zenodo)
+      /*
       let linkType = text;
       if (linkType.indexOf("Zenodo") == -1) { //if link has no "Zenodo" in it -> type = edition
         navlink.innerHTML += '<i class="fa fa-pencil"></i>';
       } else if (linkType.indexOf("Zenodo") != -1) {
         navlink.innerHTML += '<i class="fa fa-cloud-upload"></i>'
       }
-
+      */
       return navlink;
     }
 
